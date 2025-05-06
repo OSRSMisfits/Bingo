@@ -28,10 +28,18 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    - name: GZIP
+      run: |
+        npm install gzip-cli
+        gzip ./dist/* -k -9
     - name: Update pages artifact
       uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
+    - name: Update assets artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist/assets/
   deploy:
     needs: build
     environment:
