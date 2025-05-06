@@ -37,7 +37,7 @@ jobs:
         git commit -a -m "Generate Web Page"
         git push
     - name: Update pages artifact
-      uses: actions/upload-pages-artifact@v1
+      uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
   deploy:
