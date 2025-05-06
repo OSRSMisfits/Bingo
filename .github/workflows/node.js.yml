@@ -31,11 +31,7 @@ jobs:
     - name: Update pages artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: dist/
-    - name: Update assets artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: dist/assets/
+        path: dist/.
   deploy:
     needs: build
     environment:
