@@ -27,6 +27,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - name: Update env
+      uses: jaywcjlove/github-action-modify-file-content@main
+      with:
+        path: .env
+        body: "VITE_API_KEY=$VITE_API_KEY",
+        overwrite: 'true'
     - run: npm run build --if-present
     - name: Setup Pages
       uses: actions/configure-pages@v5
