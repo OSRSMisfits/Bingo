@@ -96,7 +96,8 @@ function emitInspect(tile: Tile, row: number, column: number) {
     .container {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 25%;
+        max-width: 500px;
     }
 
     .info .standing {
@@ -223,8 +224,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
 
     .board .tile.completed::after {
         content: '';
-        /*background-image: url("https://i.imgur.com/yInGQaj.png");*/
-        background-image: url("https://cdn.discordapp.com/attachments/1349447201310507149/1369729748049334322/Emoji-misfits.png?ex=681cebbc&is=681b9a3c&hm=648540ee0590f6e1bb98d1e1b38c6bf62029c3fa60b8011db4c752d483ae9342&");
+        background-image: url("https://i.imgur.com/JatVqlz.png");
         width: 105%;
         aspect-ratio: 1;
         display: block;

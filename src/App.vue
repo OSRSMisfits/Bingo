@@ -300,7 +300,7 @@
     </div>
   </div>
 
-  <template v-if="data.loaded">
+  <div v-if="data.loaded" class="boards">
     <div v-if="data.details.teamCount == 2">
 
     </div>
@@ -330,8 +330,7 @@
         style="padding-top:48px" 
       />
     </div>
-  </template>
-  <template v-if="data.details.teamCount > 3">
+    <template v-if="data.details.teamCount > 3">
     <div class="bottom-boards">
       <Board
         v-for="(board, i) in data.teamBoards.slice(3)"
@@ -345,6 +344,7 @@
       />
     </div>
   </template>
+  </div>
 </template>
 
 <style scoped>
@@ -462,6 +462,7 @@
 
   .inspect-overlay {
     position: fixed;
+    top: 172px;
     background: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;
@@ -496,7 +497,7 @@
   }
 
   .inspect-overlay .tile-img {
-    width: 10%;
+    width: 15%;
     top: 0;
     position: relative;
     display: block;
@@ -571,6 +572,11 @@
     width: 100%;
     max-width: 100px;
     max-height: 150px;
+  }
+
+  .boards {
+    position: absolute;
+    left: 0;
   }
 
   .top-boards {
