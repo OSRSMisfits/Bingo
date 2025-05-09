@@ -1,11 +1,9 @@
 <script setup lang="ts">
-  //import Board from './components/Board.vue'
-  //import axios from 'axios'
-  import { reactive } from 'vue'
+  import Board from './components/Board.vue'
+  import axios from 'axios'
+  import { reactive, ref } from 'vue'
 
   const apiKey = import.meta.env.VITE_API_KEY
-
-  let rawTmp = [["2025-05-02T00:00:00.000Z","","https://cdn.discordapp.com/attachments/771960484534419468/1369165840280457307/image.png?ex=681ade8e&is=68198d0e&hm=6455077cd1c6d7d7996e18495af07db7bb764b497278d40e3cc424b3b501a38a&","https://cdn.discordapp.com/attachments/771960484534419468/1369165872098443336/image.png?ex=681ade95&is=68198d15&hm=0ca3fbc77791cee2296ba5e21f51c545ba7698ef2f5609b89957993402f78fe9&","https://cdn.discordapp.com/attachments/771960484534419468/1369165911822434385/image.png?ex=681ade9f&is=68198d1f&hm=8884acc4a6b15e4835c7c9fd29d771fcf7e6fb30bb7961071ecd1d5303b0b7dd&","https://cdn.discordapp.com/attachments/771960484534419468/1369165938166988880/image.png?ex=681adea5&is=68198d25&hm=423687028683511ec086eef705cebd48b7101e7db3582f6372331ebbb3eb005a&","https://cdn.discordapp.com/attachments/771960484534419468/1369165981729034280/image.png?ex=681adeaf&is=68198d2f&hm=5896ec189403499b19be255908d6ce074c0e2fe65cd022a0d7a022134a698c77&"],["2025-06-01T00:00:00.000Z","","Venator Bow,Get a venator bow","Mega Rare,Get a mega rare","Barrows Set,Finish a barrows set","Ranger Boots,Get rangers","Clue Reward Over 1m,Get a clue reward worth over 1m"],["","","10","20","10","15","5"],["8","","https://cdn.discordapp.com/attachments/771960484534419468/1369167365807280230/image.png?ex=681adff9&is=68198e79&hm=f88ba09e81f8fbf07a023a4b0785e8738e13965a3ce0e7c5fd6325d1a178cf65&","https://cdn.discordapp.com/attachments/771960484534419468/1369167394185941062/image.png?ex=681ae000&is=68198e80&hm=940a5cd64f2b44dd77a9cd6a5033d36123ea63e49308e1d5bda377d2ec4f5b6c&","https://cdn.discordapp.com/attachments/771960484534419468/1369167496514502748/image.png?ex=681ae019&is=68198e99&hm=69d4e006df56a3946e1a7587b830f90ddcdffb7f995d837985428338b3fa712e&","https://cdn.discordapp.com/attachments/771960484534419468/1369167552206606356/image.png?ex=681ae026&is=68198ea6&hm=4f90d62f815f12cfbc0c5e74aa0d1ca1fa876fbc7bea589fd2cf2a8044dd7657&","https://cdn.discordapp.com/attachments/771960484534419468/1369167579851001887/image.png?ex=681ae02c&is=68198eac&hm=e9942730fb04ae49c527470f3d69d7acb3ed8bc1ee40dad0eb4eed4391e839af&"],["player 1,player 2,player 3","Red","Zulrah,Get a zulrah unique","1k Chompies,Kill 1000 chompies","Superiors,Get an imbued heart","Perilous Moons,Get a moons set","Spines,15 Scurrius spines"],["john,james,bob","Blue","5","5","25","10","5"],["bill,tim,timothy,timmy 2 shoes,timmy 3 shoes","Green","https://cdn.discordapp.com/attachments/771960484534419468/1369168261857542225/image.png?ex=681ae0cf&is=68198f4f&hm=98c386045e4ab72faa87af38f8bff8e1d139d07899e2fb4151f6d356aff649fb&","https://cdn.discordapp.com/attachments/771960484534419468/1369168289129042021/image.png?ex=681ae0d6&is=68198f56&hm=3cb95f593af5ba3ac90762ef9b3ddb8bc628734292cd9f571db47ab99c9ba7d1&","https://cdn.discordapp.com/attachments/771960484534419468/1369168314169032734/image.png?ex=681ae0dc&is=68198f5c&hm=c18aca22a8c17d82ba7fdb23766bbf0e0a7582686eaeca11f6939b4314a5efc7&","https://cdn.discordapp.com/attachments/771960484534419468/1369168342107033701/image.png?ex=681ae0e2&is=68198f62&hm=f361bf9f4fe5219ebc152aaf123794c93c9a7ce77f081e7db1467a11bf79b402&","https://cdn.discordapp.com/attachments/771960484534419468/1369168370745872505/image.png?ex=681ae0e9&is=68198f69&hm=9988620d4d982aa0b4e37fb5ad2564e8d1391f485453009f7feee40f0dc76664&"],["player 4,player 5,player 6","Orange","Dfh,Get a dfh","Ward,Complete a ward","Infernal cape,Get an infernal cape","DWH,Get a DWH","Raids set,Complete a raids set"],["player 7,player 8,player 9","Yellow","20","10","5","10","10"],["player 10,player 11,player 12","Purple","https://cdn.discordapp.com/attachments/771960484534419468/1369168695338991687/image.png?ex=681ae136&is=68198fb6&hm=a62e30dd31df43155cf932fc4dfc9e0d386401d94406bb6a8ce2dc6780112dee&","https://cdn.discordapp.com/attachments/771960484534419468/1369168722027085885/image.png?ex=681ae13d&is=68198fbd&hm=8bd9b12ff3bedfd91655436969e66568defc17e7bdc4cdd53e1134e71527db72&","https://cdn.discordapp.com/attachments/771960484534419468/1369168752549040128/image.png?ex=681ae144&is=68198fc4&hm=4a7daf6a43b5ef52d9aeb2229839c513b2d167fa85dbbedbe9bd9d29dd304e6c&","https://cdn.discordapp.com/attachments/771960484534419468/1369168803522678845/image.png?ex=681ae150&is=68198fd0&hm=4024a5888d085e7b2ac10e075b340c9cc00f82aade7459e6bcd40f499ee0d4f4&","https://cdn.discordapp.com/attachments/771960484534419468/1369168832433754163/image.png?ex=681ae157&is=68198fd7&hm=ac3fe1164f04c30c8840664be069e717aad3a4f2e6194c5ff49921787bcbc9c6&"],["player 4,player 5,player 6","White","Nex,Get a Nex unique","GWD hilt,Get a hilt","Elder chaos,Get an elder chaos piece","Vorkath,Get a Vorkath unique","Voidwaker piece,Get a piece of the Voidwaker"],["player 4,player 5,player 6","Black","10","10","5","5","10"],["","","https://cdn.discordapp.com/attachments/771960484534419468/1369169276501622904/image.png?ex=681ae1c1&is=68199041&hm=a9d59604539757ed7991e627902ca67894c62b3da2393916a44a88be611d7b55&","https://cdn.discordapp.com/attachments/771960484534419468/1369169308248313968/image.png?ex=681ae1c9&is=68199049&hm=a4cf773c339694ac0ba129c733cd6b87881f734a6345c5ebad211cd651457ab9&","https://cdn.discordapp.com/attachments/771960484534419468/1369169333225259008/image.png?ex=681ae1ce&is=6819904e&hm=8f4ae84b04fe88000451c75776af743d66e3ea7948dfa54983b045dc6eb10b68&","https://cdn.discordapp.com/attachments/771960484534419468/1369169364338868224/image.png?ex=681ae1d6&is=68199056&hm=277d547948a10621bb84a964586db3266c9e4963f7c402ba2cefeeb0f016d760&","https://cdn.discordapp.com/attachments/771960484534419468/1369169393388486725/image.png?ex=681ae1dd&is=6819905d&hm=da0128d99618420b126119a927324d765c70062ff4dbdede3773052b4e45ff40&"],["2","","Tzhaar Uniques,3 Tzhaar uniques","Dex / Arcane,Get a dex or arcane","Gauntlet,Get an enhanced weapon seed","Virtus Piece,Get a Virtus piece","Zenytes,Get 2 zenytes"],["5","","10","5","10","10","5"]]
 
   let data: GameDetails = reactive({
     details: {
@@ -16,12 +14,28 @@
       teamCount: 0,
       teams: []
     },
-    board: [[]]
+    board: [[]],
+    teamBoards: [],
+    loaded: false
   })
 
-  // axios.get("https://sheets.googleapis.com/v4/spreadsheets/1WGpralI8D2-hygILGLxCRlrX9RnbRBGKsO8qkovRV4Y/values/B5:M34?key=AIzaSyCMngiAP33V16p4zJV9pccuYGfmtD-vpZA").then(res => {
-  //   console.log(JSON.stringify(res.data.values))
-  // })
+  axios.get(`https://sheets.googleapis.com/v4/spreadsheets/1WGpralI8D2-hygILGLxCRlrX9RnbRBGKsO8qkovRV4Y/values/B5:N34?key=${apiKey}`).then(res => {
+    buildDetails(res.data.values)
+    buildBoard(res.data.values, data.details)
+
+    updateTimer()
+    setInterval(updateTimer, 10000)
+
+    const fetchStandings = () => {
+      const endRange = `N${36 + (data.details.teamCount * 10)}`
+      axios.get(`https://sheets.googleapis.com/v4/spreadsheets/1WGpralI8D2-hygILGLxCRlrX9RnbRBGKsO8qkovRV4Y/values/D37:${endRange}?key=${apiKey}`).then(res => {
+        buildStandings(res.data.values, data.details, data.board)
+      })
+    }
+
+    fetchStandings()
+    setInterval(() => fetchStandings(), 60000)
+  })
 
   function buildDetails(raw: Array<Array<string>>) {
     const teamCount = Math.min(parseInt(raw[3][0]), 8)
@@ -48,8 +62,6 @@
     const boardSize = details.boardSize
     const board: Array<Array<Tile>> = []
 
-    console.log(boardSize)
-
     for (let row = 0; row < boardSize; row++) {
       const builtRow: Array<Tile> = []
 
@@ -73,8 +85,168 @@
     data.board = board
   }
 
-  buildDetails(rawTmp)
-  buildBoard(rawTmp, data.details)
+  function buildStandings(raw: Array<Array<string>>, details: BoardDetails, board: Array<Array<Tile>>) {
+    const boardSize = details.boardSize
+    const teamBoards: Array<TeamBoard> = []
+
+    for (let i = 0; i < details.teamCount; i++) {
+      const teamBoard: TeamBoard = {
+        team: i,
+        points: 0,
+        standing: -1,
+        board: []
+      }
+
+      for (let row = 0; row < boardSize; row++) {
+        const builtRow: Array<TeamTile> = []
+
+        if (raw[row + (10 * i)].length)
+
+        for (let column = 0; column < boardSize; column++) {
+          const tile: TeamTile = {
+            completed: raw[row + (10 * i)][column]?.length > 0 || false,
+            screenshot: raw[row + (10 * i)][column] || ""
+          }
+
+          if (tile.completed) {
+            teamBoard.points += board[row][column].points
+          }
+
+          builtRow.push(tile)
+        }
+
+        teamBoard.board.push(builtRow)
+      }
+
+      teamBoards.push(teamBoard)
+    }
+
+    teamBoards.sort((a, b) => {
+      return b.points - a.points
+    })
+
+    for (let i = 0; i < details.teamCount; i++) {
+      teamBoards[i].standing = i + 1
+    }
+
+    data.teamBoards = teamBoards
+
+    data.loaded = true
+  }
+
+  let timerPercent = ref(0)
+
+  const updateTimer = () => {
+    const start = data.details.startTime.getTime()
+    const now = new Date().getTime()
+    const end = data.details.endTime.getTime()
+
+    if (start > now) {
+      timerPercent.value = 0
+      return;
+    }
+
+    timerPercent.value = Math.min(((now - start) / (end - start)) * 100, 100)
+  }
+
+  function getMonth(month: number) {
+    switch(month) {
+      case 0:  return "January"
+      case 1:  return "February"
+      case 2:  return "March"
+      case 3:  return "April"
+      case 4:  return "May"
+      case 5:  return "June"
+      case 6:  return "July"
+      case 7:  return "August"
+      case 8:  return "September"
+      case 9: return "October"
+      case 10: return "November"
+      case 11: return "December"
+    }
+  }
+
+  function startDay() {
+    return data.details.startTime.getDate().toString().padStart(2, "0")
+  }
+
+  function startMonth() {
+    const month = data.details.startTime.getMonth()
+
+    return getMonth(month)
+  }
+
+  function startTime() {
+    const hours = data.details.startTime.getHours().toString().padStart(2, "0")
+    const minutes = data.details.startTime.getMinutes().toString().padStart(2, "0")
+
+    return `${hours}:${minutes}`
+  }
+
+  function endDay() {
+    return data.details.endTime.getDate().toString().padStart(2, "0")
+  }
+
+  function endMonth() {
+    const month = data.details.endTime.getMonth()
+
+    return getMonth(month)
+  }
+
+  function endTime() {
+    const hours = data.details.endTime.getHours().toString().padStart(2, "0")
+    const minutes = data.details.endTime.getMinutes().toString().padStart(2, "0")
+
+    return `${hours}:${minutes}`
+  }
+
+  
+  const inspectData = ref<InspectData>({
+    inspecting: false,
+    show: false,
+    image: "",
+    name: "",
+    description: "",
+    points: 0,
+    completions: []
+  })
+
+  function inspectTile(tile: PositionedTile) {
+    const completions: Array<TeamTileCompletion> = []
+    
+    for (let i = 0; i < data.details.teamCount; i++) {
+      const board = data.teamBoards[i].board
+
+      if (board == null) continue
+      if (board[tile.row] == null) continue
+      if (board[tile.row][tile.column] == null) continue
+      if (!board[tile.row][tile.column].completed) continue
+
+      const teamTile = board[tile.row][tile.column]
+
+      const completion: TeamTileCompletion = {
+        name: data.details.teams[i].name,
+        screenshot: teamTile.screenshot.startsWith("http") ? teamTile.screenshot : ""
+      }
+
+      completions.push(completion)
+    }
+
+    inspectData.value = {
+      show: true,
+      inspecting: true,
+      image: tile.image,
+      name: tile.name,
+      description: tile.description,
+      points: tile.points,
+      completions
+    }
+  }
+
+  function closeInspect() {
+    inspectData.value.inspecting = false
+    setTimeout(() => inspectData.value.show = false, 200)
+  }
 </script>
 
 <template>
@@ -176,5 +348,247 @@
 </template>
 
 <style scoped>
+  .top {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
 
+  .top-bar {
+    width: 100vw;
+    height: 70px;
+    background: #150223;
+    text-shadow: 0.5px 2px 1px #9e9e9e;
+    border-bottom: 5px solid #161616;
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-bottom: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .top-bar span {
+    font-size: 48px;
+    line-height: 65px;
+    font-weight: bold;
+  }
+
+  .top-bar .logo {
+    width: 250px;
+    position: relative;
+    top: -65px;
+  }
+
+  .top-bar .logo img {
+    width: calc(100% - 50px);
+    margin-left: 10px;
+    border-radius: 50%;
+    border: 5px solid #161616;
+  }
+
+  .timer {
+    background-image: url("https://i.imgur.com/JDwvuI6.jpeg");
+    background-size: contain;
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    top: 67px;
+    z-index: -1;
+    border-bottom: 5px solid #161616
+  }
+
+  .timer .timer-progress {
+    height: 100%;
+    width: calc(100% - 209px);
+    margin-left: 105px;
+  }
+
+  .timer .timer-progress div {
+    height: 100%;
+    background-clip: border-box;
+    background: linear-gradient(90deg, rgba(108, 9, 184, 0.5), rgba(47, 4, 80, 0.5));
+    transform: skew(-22deg);
+    transition: width 1s ease-in-out;
+  }
+
+  .timer .timer-cap {
+    position: absolute;
+    top: 0;
+    left: -19px;
+    width: 118px;
+    height: 100%;
+    background: #cfcfcf;
+    transform: skew(-22deg);
+    color: #121212;
+    text-shadow: 0.5px 0.5px 1px #070707;
+    font-weight: bold;
+  }
+
+  .timer .timer-start {
+    box-shadow: 5px 0px 0px #161616;
+  }
+
+  .timer .timer-end {
+    box-shadow: -5px 0px 0px #161616;
+  }
+
+  .timer .timer-end {
+    left: unset;
+    right: -19px;
+  }
+
+  .timer .timer-cap .contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transform: skew(22deg);
+    text-align: center;
+    height: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+  }
+
+  .timer .timer-cap.timer-end .contents {
+    margin-left: unset;
+    margin-right: 10px;
+  }
+
+  .timer .timer-cap .contents .day {
+    font-size: 36px;
+    line-height: 20px;
+  }
+
+  .inspect-overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    z-index: 500;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .inspect-overlay .contents {
+    top: 0;
+    position: relative;
+    transition: top 0.2s ease-in-out;
+  }
+
+  .inspect-overlay.show .contents {
+    top: 20px;
+  }
+
+  .inspect-overlay.show {
+    opacity: 1;
+  }
+
+  .inspect-overlay.background {
+    z-index: -500;
+  }
+
+  @property --a {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .inspect-overlay .tile-img {
+    width: 10%;
+    top: 0;
+    position: relative;
+    display: block;
+    margin: auto;
+
+    padding: 8px;
+    border-radius: 5px;
+    background: conic-gradient(from var(--a), rgba(0,0,0,0) 0deg, rgba(0,0,0,0) 120deg, #7E0BA8 240deg, rgba(0,0,0,0) 360deg);
+    animation: border 4s infinite linear;
+    animation-delay: 0ms;
+  }
+
+  @keyframes border {
+    0% {
+      --a: 0deg
+    }
+    100% {
+      --a: 360deg
+    }
+  }
+
+  .inspect-overlay .name {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 32px;
+    color: #7E0BA8;
+    font-weight: bold;
+  }
+
+  .inspect-overlay .points {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .inspect-overlay .description {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    width: 50%;
+    margin: auto;
+  }
+
+  .inspect-overlay .teams-header {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 25px;
+  }
+
+  .inspect-overlay .teams-list {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 1;
+    justify-content: space-around;
+    width: 80%;
+    margin: auto;
+  }
+
+  .inspect-overlay .teams-list .team {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inspect-overlay .teams-list .team .team-name {
+    width: 100%;
+    text-align: center;
+  }
+
+  .inspect-overlay .teams-list .team .team-screenshot {
+    width: 100%;
+    max-width: 100px;
+    max-height: 150px;
+  }
+
+  .top-boards {
+    margin-left: 5vw;
+    margin-top: 155px;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bottom-boards {
+    margin-left: 5vw;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
 </style>
