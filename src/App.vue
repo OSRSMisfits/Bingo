@@ -78,7 +78,101 @@
 </script>
 
 <template>
-  Test {{ apiKey }}
+  <div class="top">
+    <div class="top-bar">
+      <span>Misfits</span>
+      <div class="logo">
+        <img src="https://i.imgur.com/ZP7tgAw.png">
+      </div>
+      <span style="position:relative;left:-20px;">Bingo</span>
+    </div>
+
+    <div class="timer">
+      <div class="timer-progress">
+        <div class="bar" :style="`width: ${timerPercent}%`"></div>
+      </div>
+      <div class="timer-cap timer-start">
+        <div class="contents">
+          <span>Start</span>
+          <span class="day">{{ startDay() }}</span>
+          <span>{{ startMonth() }}</span>
+          <span>{{ startTime() }}</span>
+        </div>
+      </div>
+      <div class="timer-cap timer-end">
+        <div class="contents">
+          <span>End</span>
+          <span class="day">{{ endDay() }}</span>
+          <span>{{ endMonth() }}</span>
+          <span>{{ endTime() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div :class="{ 'inspect-overlay': true, show: inspectData.inspecting, background: !inspectData.show }" @click="closeInspect">
+    <div class="contents">
+      <img :src="inspectData.image" class="tile-img">
+      <span class="name">{{ inspectData.name }}</span>
+      <span v-if="data.details.gameType == 2" class="points">{{ inspectData.points }} Points</span>
+      <span class="description">{{ inspectData.description }}</span>
+      <span class="teams-header">Teams that have completed this tile:</span>
+      <div class="teams-list">
+        <div v-for="(team, index) in inspectData.completions" :key="`team${index}-completion`" class="team">
+          <span class="team-name">Team {{ team.name }}</span>
+          <a v-if="team.screenshot.length" :href="team.screenshot" target="_blank" @click.stop="">
+            <img :src="team.screenshot" class="team-screenshot">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <template v-if="data.loaded">
+    <div v-if="data.details.teamCount == 2">
+
+    </div>
+    <div v-else-if="data.details.teamCount > 2" class="top-boards">
+      <Board 
+        :board="data.board" 
+        :details="data.details" 
+        :teamboard="data.teamBoards[1]" 
+        :boardid="1"
+        @inspect="inspectTile"
+        style="padding-top:48px" 
+      />
+      <Board 
+        :board="data.board" 
+        :details="data.details" 
+        :teamboard="data.teamBoards[0]" 
+        :boardid="0" 
+        @inspect="inspectTile"
+        style="transform:scale(1.1)" 
+      />
+      <Board 
+        :board="data.board" 
+        :details="data.details" 
+        :teamboard="data.teamBoards[2]" 
+        :boardid="2"
+        @inspect="inspectTile"
+        style="padding-top:48px" 
+      />
+    </div>
+  </template>
+  <template v-if="data.details.teamCount > 3">
+    <div class="bottom-boards">
+      <Board
+        v-for="(board, i) in data.teamBoards.slice(3)"
+        :key="`board-${i + 3}`"
+        :board="data.board" 
+        :details="data.details" 
+        :teamboard="board" 
+        :boardid="i + 3"
+        @inspect="inspectTile"
+        style="transform:scale(0.8)" 
+      />
+    </div>
+  </template>
 </template>
 
 <style scoped>
