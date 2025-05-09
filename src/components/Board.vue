@@ -1,14 +1,237 @@
 <script setup lang="ts">
-//import { ref } from 'vue'
 
-defineProps<{ board: object }>()
+const emit = defineEmits(['inspect'])
+
+const props = defineProps<{ 
+    board: Array<Array<Tile>>,
+    details: BoardDetails,
+    teamboard: TeamBoard,
+    boardid: number
+}>()
+
+function tileCompleted(row: number, column: number) {
+    return props.teamboard.board[row][column]?.completed || false
+}
+
+function standingSuper() {
+    if (props.teamboard.standing == 1) {
+        return "st"
+    }
+    if (props.teamboard.standing == 2) {
+        return "nd"
+    }
+    if (props.teamboard.standing == 3) {
+        return "rd"
+    }
+    if (props.teamboard.standing > 3) {
+        return "th"
+    }
+}
+
+function standingClass() {
+    if (props.teamboard.standing == 1) {
+        return { standing: true, first: true }
+    }
+    if (props.teamboard.standing == 2) {
+        return { standing: true, second: true }
+    }
+    if (props.teamboard.standing == 3) {
+        return { standing: true, third: true }
+    }
+
+    return { standing: true }
+}
+
+function teamInfo() {
+    return props.details.teams[props.boardid]
+}
+
+function emitInspect(tile: Tile, row: number, column: number) {
+    const posTile: PositionedTile = {
+        image: tile.image,
+        name: tile.name,
+        description: tile.description,
+        points: tile.points,
+        row,
+        column
+    }
+
+    emit('inspect', posTile)
+}
 
 </script>
 
 <template>
-  
+    <div class="container">
+        <div class="info">
+            <span :class="standingClass()">
+                {{ teamboard.standing }}<sup>{{ standingSuper() }}</sup>
+            </span>
+            <span class="team-points">
+                {{ teamboard.points }} Points
+            </span>
+            <span class="team-name">
+                Team {{ teamInfo().name }}
+            </span>
+            <span class="team-members">
+                {{ teamInfo().members.join(", ") }}
+            </span>
+        </div>
+        <div class="board">
+            <div v-for="(row, rowIndex) in board" :key="`${boardid}-row${rowIndex}`" class="row">
+                <div 
+                    v-for="(tile, tileIndex) in row" 
+                    :key="`${boardid}-row${rowIndex}-tile${tileIndex}`"
+                    :class="{ tile: true, completed: tileCompleted(rowIndex, tileIndex) }"
+                    @click="emitInspect(tile, rowIndex, tileIndex)"
+                >
+                    <img :src="tile.image">
+                </div>
+            </div> 
+        </div>
+    </div>
 </template>
 
 <style scoped>
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
 
+    .info .standing {
+        font-size: 48px;
+        font-weight: 800;
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+
+    .info .standing.first {
+        color: transparent;
+        background: var(--gold-gradient);
+        background-clip: text;
+    }
+
+    .info .standing.second {
+        color: transparent;
+        background: var(--silver-gradient);
+        background-clip: text;
+    }
+
+    .info .standing.third {
+        color: transparent;
+        background: var(--bronze-gradient);
+        background-clip: text;
+    }
+
+    .info .standing sup {
+        position: relative;
+        top: 3px;
+        font-weight: 500;
+        background: inherit
+    }
+
+    .info .standing.first sup::after {
+        background: var(--gold-gradient);
+    }
+
+    .info .standing.second sup::after {
+        background: var(--silver-gradient);
+    }
+
+    .info .standing.third sup::after {
+        background: var(--bronze-gradient);
+    }
+
+    .info .standing sup::after {
+        content: '';
+        height: 2px;
+        width: 100%;
+        display: block;
+        position: absolute;
+        background-clip: border-box;
+        background: #dbdbdb;
+        top: 45px;
+        left: 0px;
+    }
+
+    .info .team-points {
+        font-size: 16px;
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin-top: -10px;
+    }
+
+    .info .team-name {
+        font-size: 24px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin-top: -12px;
+    }
+
+    .info .team-members {
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin-top: -8px;
+        margin-bottom: 2px;
+    }
+
+    .board {
+        background: #111111;
+        padding-top: 4px;
+        padding-right: 4px;
+    }
+
+    .board .row {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .board .tile {
+        width: auto;
+        aspect-ratio: 1;
+        margin-left: 5px;
+        margin-right: 5px;
+        flex: 1 1 0px;
+        cursor: pointer;
+
+        display: inline-block;
+    }
+
+    .board .tile img {
+        width: 100%;
+        aspect-ratio: 1;
+        border: 3px solid #c7c7c7;
+    }
+
+    .board .tile.completed img {
+        border-color: #7E0BA8;
+        opacity: 0.5;
+    }
+
+    .board .tile.completed {
+        position: relative;
+    }
+
+    .board .tile.completed::after {
+        content: '';
+        /*background-image: url("https://i.imgur.com/yInGQaj.png");*/
+        background-image: url("https://cdn.discordapp.com/attachments/1349447201310507149/1369729748049334322/Emoji-misfits.png?ex=681cebbc&is=681b9a3c&hm=648540ee0590f6e1bb98d1e1b38c6bf62029c3fa60b8011db4c752d483ae9342&");
+        width: 105%;
+        aspect-ratio: 1;
+        display: block;
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -100%;
+        margin-left: 2.5%;
+    }
 </style>
