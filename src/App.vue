@@ -20,7 +20,7 @@
     loaded: false
   })
 
-  axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/B5:N34?key=${apiKey}`).then(res => {
+  axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/Data!B5:N34?key=${apiKey}`).then(res => {
     buildDetails(res.data.values)
     buildBoard(res.data.values, data.details)
 
@@ -29,7 +29,7 @@
 
     const fetchStandings = () => {
       const endRange = `N${36 + (data.details.teamCount * 10)}`
-      axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/D37:${endRange}?key=${apiKey}`).then(res => {
+      axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/Data!D37:${endRange}?key=${apiKey}`).then(res => {
         buildStandings(res.data.values, data.details, data.board)
       })
     }
