@@ -4,6 +4,7 @@
   import { reactive, ref } from 'vue'
 
   const apiKey = import.meta.env.VITE_API_KEY
+  const spreadsheet = import.meta.env.VITE_SPREADSHEET_ID
 
   let data: GameDetails = reactive({
     details: {
@@ -19,7 +20,7 @@
     loaded: false
   })
 
-  axios.get(`https://sheets.googleapis.com/v4/spreadsheets/1WGpralI8D2-hygILGLxCRlrX9RnbRBGKsO8qkovRV4Y/values/B5:N34?key=${apiKey}`).then(res => {
+  axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/B5:N34?key=${apiKey}`).then(res => {
     buildDetails(res.data.values)
     buildBoard(res.data.values, data.details)
 
@@ -28,7 +29,7 @@
 
     const fetchStandings = () => {
       const endRange = `N${36 + (data.details.teamCount * 10)}`
-      axios.get(`https://sheets.googleapis.com/v4/spreadsheets/1WGpralI8D2-hygILGLxCRlrX9RnbRBGKsO8qkovRV4Y/values/D37:${endRange}?key=${apiKey}`).then(res => {
+      axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/D37:${endRange}?key=${apiKey}`).then(res => {
         buildStandings(res.data.values, data.details, data.board)
       })
     }
@@ -225,7 +226,7 @@
       const teamTile = board[tile.row][tile.column]
 
       const completion: TeamTileCompletion = {
-        name: data.details.teams[i].name,
+        name: data.details.teams[data.teamBoards[i].team].name,
         screenshot: teamTile.screenshot.startsWith("http") ? teamTile.screenshot : ""
       }
 
@@ -247,6 +248,10 @@
     inspectData.value.inspecting = false
     setTimeout(() => inspectData.value.show = false, 200)
   }
+
+  function mobile() {
+    return window.innerWidth > 1800
+  }
 </script>
 
 <template>
@@ -254,7 +259,7 @@
     <div class="top-bar">
       <span>Misfits</span>
       <div class="logo">
-        <img src="https://i.imgur.com/ZP7tgAw.png">
+        <img src="/misfits-logo.png">
       </div>
       <span style="position:relative;left:-20px;">Bingo</span>
     </div>
@@ -288,7 +293,8 @@
       <span class="name">{{ inspectData.name }}</span>
       <span v-if="data.details.gameType == 2" class="points">{{ inspectData.points }} Points</span>
       <span class="description">{{ inspectData.description }}</span>
-      <span class="teams-header">Teams that have completed this tile:</span>
+      <span v-if="inspectData.completions.length" class="teams-header">Teams that have completed this tile:</span>
+      <span v-else class="teams-header">No teams have completed this tile</span>
       <div class="teams-list">
         <div v-for="(team, index) in inspectData.completions" :key="`team${index}-completion`" class="team">
           <span class="team-name">Team {{ team.name }}</span>
@@ -301,49 +307,65 @@
   </div>
 
   <div v-if="data.loaded" class="boards">
-    <div v-if="data.details.teamCount == 2">
-
-    </div>
-    <div v-else-if="data.details.teamCount > 2" class="top-boards">
-      <Board 
-        :board="data.board" 
-        :details="data.details" 
-        :teamboard="data.teamBoards[1]" 
-        :boardid="1"
-        @inspect="inspectTile"
-        style="padding-top:48px" 
-      />
-      <Board 
-        :board="data.board" 
-        :details="data.details" 
-        :teamboard="data.teamBoards[0]" 
-        :boardid="0" 
-        @inspect="inspectTile"
-        style="transform:scale(1.1)" 
-      />
-      <Board 
-        :board="data.board" 
-        :details="data.details" 
-        :teamboard="data.teamBoards[2]" 
-        :boardid="2"
-        @inspect="inspectTile"
-        style="padding-top:48px" 
-      />
-    </div>
-    <template v-if="data.details.teamCount > 3">
-    <div class="bottom-boards">
-      <Board
-        v-for="(board, i) in data.teamBoards.slice(3)"
-        :key="`board-${i + 3}`"
-        :board="data.board" 
-        :details="data.details" 
-        :teamboard="board" 
-        :boardid="i + 3"
-        @inspect="inspectTile"
-        style="transform:scale(0.8)" 
-      />
-    </div>
-  </template>
+    <template v-if="mobile()">
+      <div v-if="data.details.teamCount == 2">
+        <!-- TODO: Only 2 teams -->
+      </div>
+      <div v-else-if="data.details.teamCount > 2" class="top-boards">
+        <Board 
+          :board="data.board" 
+          :details="data.details" 
+          :teamboard="data.teamBoards[1]" 
+          :boardid="1"
+          @inspect="inspectTile"
+          style="padding-top:48px" 
+        />
+        <Board 
+          :board="data.board" 
+          :details="data.details" 
+          :teamboard="data.teamBoards[0]" 
+          :boardid="0" 
+          @inspect="inspectTile"
+          style="transform:scale(1.1)" 
+        />
+        <Board 
+          :board="data.board" 
+          :details="data.details" 
+          :teamboard="data.teamBoards[2]" 
+          :boardid="2"
+          @inspect="inspectTile"
+          style="padding-top:48px" 
+        />
+      </div>
+      <template v-if="data.details.teamCount > 3">
+        <div class="bottom-boards">
+          <Board
+            v-for="(board, i) in data.teamBoards.slice(3)"
+            :key="`board-${i + 3}`"
+            :board="data.board" 
+            :details="data.details" 
+            :teamboard="board" 
+            :boardid="i + 3"
+            @inspect="inspectTile"
+            style="transform:scale(0.8)" 
+          />
+        </div>
+      </template>
+    </template>
+    <template v-else>
+      <!-- Mobile -->
+      <div class="mobile-boards">
+          <Board
+            v-for="(board, i) in data.teamBoards"
+            :key="`board-${i}`"
+            :board="data.board" 
+            :details="data.details" 
+            :teamboard="board" 
+            :boardid="i"
+            @inspect="inspectTile"
+          />
+        </div>
+    </template>
   </div>
 </template>
 
@@ -362,7 +384,7 @@
     text-shadow: 0.5px 2px 1px #9e9e9e;
     border-bottom: 5px solid #161616;
     margin-top: -8px;
-    margin-left: -8px;
+    margin-left: 0;
     margin-bottom: 150px;
     display: flex;
     flex-direction: row;
@@ -386,15 +408,17 @@
     margin-left: 10px;
     border-radius: 50%;
     border: 5px solid #161616;
+    display: relative;
   }
 
   .timer {
     background-image: url("https://i.imgur.com/JDwvuI6.jpeg");
     background-size: contain;
-    width: 100%;
+    width: calc(100% + 16px);
     height: 100px;
     position: absolute;
     top: 67px;
+    left: -16px;
     z-index: -1;
     border-bottom: 5px solid #161616
   }
@@ -552,6 +576,7 @@
   .inspect-overlay .teams-list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     flex: 0 0 1;
     justify-content: space-around;
     width: 80%;
@@ -589,6 +614,10 @@
     align-items: center;
   }
 
+  .top-boards div {
+    width: 25%;
+  }
+
   .bottom-boards {
     margin-left: 5vw;
     width: 90vw;
@@ -596,5 +625,27 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+  }
+
+  .mobile-boards {
+    margin-left: 5%;
+    width: 90%;
+    margin-top: 160px;
+  }
+
+  .mobile-boards div {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .top-bar {
+      padding-left: 10px;
+    }
+
+    .top-bar span {
+      font-size: 32px !important;
+    }
+
   }
 </style>

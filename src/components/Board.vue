@@ -43,7 +43,7 @@ function standingClass() {
 }
 
 function teamInfo() {
-    return props.details.teams[props.boardid]
+    return props.details.teams[props.teamboard.team]
 }
 
 function emitInspect(tile: Tile, row: number, column: number) {
@@ -96,7 +96,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
     .container {
         display: flex;
         flex-direction: column;
-        width: 25%;
+        width: 100%;
         max-width: 500px;
     }
 
@@ -224,7 +224,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
 
     .board .tile.completed::after {
         content: '';
-        background-image: url("https://i.imgur.com/JatVqlz.png");
+        background-image: url("/misfits-logo-alt.png");
         width: 105%;
         aspect-ratio: 1;
         display: block;
