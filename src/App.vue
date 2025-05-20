@@ -436,8 +436,8 @@
 
   .timer .timer-progress {
     height: 100%;
-    width: calc(100% - 209px);
-    margin-left: 105px;
+    width: calc(100% - 217px);
+    margin-left: 114px;
   }
 
   .timer .timer-progress div {
@@ -482,13 +482,21 @@
     transform: skew(22deg);
     text-align: center;
     height: 100%;
-    margin-left: 10px;
+    margin-top: 2px;
     font-size: 16px;
+  }
+
+  .timer .timer-cap.timer-start {
+    padding-right: 10px;
+  }
+
+  .timer .timer-cap.timer-start .contents {
+    margin-left: 25px;
   }
 
   .timer .timer-cap.timer-end .contents {
     margin-left: unset;
-    margin-right: 10px;
+    margin-right: 25px;
   }
 
   .timer .timer-cap .contents .day {
