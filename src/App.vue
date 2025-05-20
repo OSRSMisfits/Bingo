@@ -229,7 +229,7 @@
 
       const completion: TeamTileCompletion = {
         name: data.details.teams[data.teamBoards[i].team].name,
-        screenshot: teamTile.screenshot.startsWith("http") ? teamTile.screenshot : ""
+        screenshot: teamTile.screenshot.startsWith("http") ? teamTile.screenshot : "https://i.imgur.com/rpGJNaE.png"
       }
 
       completions.push(completion)
@@ -238,9 +238,9 @@
     inspectData.value = {
       show: true,
       inspecting: true,
-      image: tile.image,
-      name: tile.name,
-      description: tile.description,
+      image: tile.image || "https://i.imgur.com/rpGJNaE.png",
+      name: tile.name || "Unnamed Tile",
+      description: tile.description || "No description",
       points: tile.points,
       completions
     }
@@ -608,11 +608,17 @@
     width: 10%;
     min-width: 50px;
     align-self: flex-end;
+    border: 2px #8d8d8d solid;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 5px;
   }
 
   .inspect-overlay .teams-list .team .team-name {
     width: 100%;
     max-width: 200px;
+    font-size: 20px;
     text-align: center;
   }
 

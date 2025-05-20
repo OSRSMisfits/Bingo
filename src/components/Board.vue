@@ -85,7 +85,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
                     :class="{ tile: true, completed: tileCompleted(rowIndex, tileIndex) }"
                     @click="emitInspect(tile, rowIndex, tileIndex)"
                 >
-                    <img :src="tile.image">
+                    <img :src="tile.image || 'https://i.imgur.com/rpGJNaE.png'">
                 </div>
             </div> 
         </div>
