@@ -250,7 +250,7 @@
   }
 
   function mobile() {
-    return window.innerWidth > 1800
+    return window.innerWidth > 1400
   }
 </script>
 
@@ -432,7 +432,8 @@
   .timer .timer-progress div {
     height: 100%;
     background-clip: border-box;
-    background: linear-gradient(90deg, rgba(108, 9, 184, 0.5), rgba(47, 4, 80, 0.5));
+    background: linear-gradient(270deg, rgba(108, 9, 184, 0.5), rgba(47, 4, 80, 0.5));
+    border-right: 5px #161616 solid;
     transform: skew(-22deg);
     transition: width 1s ease-in-out;
   }
@@ -602,6 +603,7 @@
   .boards {
     position: absolute;
     left: 0;
+    width: 100%;
   }
 
   .top-boards {
@@ -631,11 +633,9 @@
     margin-left: 5%;
     width: 90%;
     margin-top: 160px;
-  }
-
-  .mobile-boards div {
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   @media only screen and (max-width: 600px) {
