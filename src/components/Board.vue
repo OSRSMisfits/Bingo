@@ -177,6 +177,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
     .info .team-members {
         font-size: 14px;
         width: 100%;
+        min-height: 5px;
         text-align: center;
         display: block;
         margin-top: -8px;

@@ -43,8 +43,10 @@
 
     const teams = []
     for(let i = 0; i < teamCount; i++) {
+      const teamName = raw[4 + i][1]
+
       teams.push({
-        name: raw[4 + i][1],
+        name: teamName.length > 0 ? teamName : `${i + 1}`,
         members: raw[4 + i][0].split(",")
       })
     }
