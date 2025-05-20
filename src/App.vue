@@ -257,11 +257,13 @@
 <template>
   <div class="top">
     <div class="top-bar">
-      <span>Misfits</span>
-      <div class="logo">
-        <img src="/misfits-logo.png">
+      <div class="contents">
+        <div class="text" style="text-align: right;">Misfits</div>
+        <div class="logo">
+          <img src="/misfits-logo.png">
+        </div>
+        <div class="text">Bingo</div>
       </div>
-      <span style="position:relative;left:-20px;">Bingo</span>
     </div>
 
     <div class="timer">
@@ -381,40 +383,47 @@
     width: 100vw;
     height: 70px;
     background: #150223;
-    text-shadow: 0.5px 2px 1px #9e9e9e;
     border-bottom: 5px solid #161616;
+    display: flex;
+    justify-content: center;
+  }
+
+  .top-bar .contents {
+    text-shadow: 0.5px 2px 1px #9e9e9e;
     margin-top: -8px;
-    margin-left: 0;
+    margin-left: -8px;
     margin-bottom: 150px;
+    padding-right: 8px;
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
 
-  .top-bar span {
+  .top-bar .contents .text {
     font-size: 48px;
     line-height: 65px;
     font-weight: bold;
+    width: 150px;
+    height: 100px;
   }
 
-  .top-bar .logo {
+  .top-bar .contents .logo {
     width: 250px;
     position: relative;
     top: -65px;
   }
 
-  .top-bar .logo img {
+  .top-bar .contents .logo img {
     width: calc(100% - 50px);
-    margin-left: 10px;
     border-radius: 50%;
     border: 5px solid #161616;
-    display: relative;
+    margin-left: 20px;
   }
 
   .timer {
     background-image: url("https://i.imgur.com/JDwvuI6.jpeg");
     background-size: contain;
-    width: calc(100% + 16px);
+    width: calc(100% + 24px);
     height: 100px;
     position: absolute;
     top: 67px;
@@ -491,7 +500,8 @@
     background: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;
-    left: 0;
+    left: -8px;
+    padding-right: 8px;
     z-index: 500;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
@@ -501,6 +511,12 @@
     top: 0;
     position: relative;
     transition: top 0.2s ease-in-out;
+
+    width: 100%;
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .inspect-overlay.show .contents {
@@ -587,22 +603,26 @@
   .inspect-overlay .teams-list .team {
     display: flex;
     flex-direction: column;
+    width: 10%;
+    min-width: 50px;
+    align-self: flex-end;
   }
 
   .inspect-overlay .teams-list .team .team-name {
     width: 100%;
+    max-width: 200px;
     text-align: center;
   }
 
   .inspect-overlay .teams-list .team .team-screenshot {
     width: 100%;
-    max-width: 100px;
-    max-height: 150px;
+    max-width: 200px;
+    max-height: 200px;
   }
 
   .boards {
     position: absolute;
-    left: 0;
+    left: -4px;
     width: 100%;
   }
 
@@ -639,13 +659,17 @@
   }
 
   @media only screen and (max-width: 600px) {
-    .top-bar {
+    .top-bar .contents {
       padding-left: 10px;
     }
 
-    .top-bar span {
-      font-size: 32px !important;
+    .top-bar .contents .logo {
+      width: 200px;
+      top: -45px;
     }
 
+    .top-bar .contents .text {
+      font-size: 32px !important;
+    }
   }
 </style>
