@@ -250,7 +250,7 @@
   }
 
   function mobile() {
-    return window.innerWidth > 600
+    return window.innerWidth > 1800
   }
 </script>
 
@@ -259,7 +259,7 @@
     <div class="top-bar">
       <span>Misfits</span>
       <div class="logo">
-        <img src="https://i.imgur.com/ZP7tgAw.png">
+        <img src="/misfits-logo.png">
       </div>
       <span style="position:relative;left:-20px;">Bingo</span>
     </div>
@@ -293,7 +293,8 @@
       <span class="name">{{ inspectData.name }}</span>
       <span v-if="data.details.gameType == 2" class="points">{{ inspectData.points }} Points</span>
       <span class="description">{{ inspectData.description }}</span>
-      <span class="teams-header">Teams that have completed this tile:</span>
+      <span v-if="inspectData.completions.length" class="teams-header">Teams that have completed this tile:</span>
+      <span v-else class="teams-header">No teams have completed this tile</span>
       <div class="teams-list">
         <div v-for="(team, index) in inspectData.completions" :key="`team${index}-completion`" class="team">
           <span class="team-name">Team {{ team.name }}</span>
@@ -575,6 +576,7 @@
   .inspect-overlay .teams-list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     flex: 0 0 1;
     justify-content: space-around;
     width: 80%;
@@ -626,9 +628,14 @@
   }
 
   .mobile-boards {
-    margin-left: 5vw;
-    width: 90vw;
+    margin-left: 5%;
+    width: 90%;
     margin-top: 160px;
+  }
+
+  .mobile-boards div {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   @media only screen and (max-width: 600px) {

@@ -224,7 +224,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
 
     .board .tile.completed::after {
         content: '';
-        background-image: url("https://i.imgur.com/JatVqlz.png");
+        background-image: url("/misfits-logo-alt.png");
         width: 105%;
         aspect-ratio: 1;
         display: block;
