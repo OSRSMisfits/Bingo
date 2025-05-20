@@ -500,8 +500,8 @@
     background: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;
-    left: -8px;
-    padding-right: 8px;
+    left: -16px;
+    padding-right: 16px;
     z-index: 500;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
@@ -670,6 +670,10 @@
 
     .top-bar .contents .text {
       font-size: 32px !important;
+    }
+
+    .inspect-overlay {
+      left: -8px;
     }
   }
 </style>
