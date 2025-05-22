@@ -551,6 +551,7 @@
 
   .inspect-overlay .tile-bg {
     width: 15%;
+    min-width: 200px;
     aspect-ratio: 1;
 
     position: relative;
@@ -699,11 +700,22 @@
     }
 
     .top-bar .contents .text {
-      font-size: 32px !important;
+      font-size: 32px;
     }
 
     .inspect-overlay {
       left: -8px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .top-bar .contents .logo {
+      width: 200px;
+      top: -45px;
+    }
+
+    .top-bar .contents .text {
+      font-size: 24px;
     }
   }
 </style>
