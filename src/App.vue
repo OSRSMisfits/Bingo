@@ -714,18 +714,19 @@
   }
 
   .starts-in {
-    position: relative;
-    top: 127px;
+    position: fixed;
+    top: 135px;
     left: -5px;
     height: 0;
     text-align: center;
     z-index: 10000;
     font-size: 20px;
     user-select: none;
+    width: 100%;
   }
 
   .rules-button {
-    position: absolute;
+    position: fixed;
     z-index: 10000;
     right: 25px;
     top: 20px;
@@ -750,6 +751,7 @@
     top: 180px;
     background: #161616;
     border: 2px solid #030303;
+    z-index: 100;
   }
 
   .rules-button.move:hover {
