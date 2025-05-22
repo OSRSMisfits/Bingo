@@ -741,6 +741,7 @@
 
     cursor: pointer;
     transition: background 0.2s ease-in-out;
+    user-select: none;
   }
 
   .rules-button:hover {
@@ -748,6 +749,7 @@
   }
 
   .rules-button.move {
+    position: absolute;
     top: 180px;
     background: #161616;
     border: 2px solid #030303;
