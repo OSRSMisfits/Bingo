@@ -255,12 +255,18 @@
     return window.innerWidth <= 1400
   }
 
-  function renderStartsIn() {
-    return data.details.startTime > new Date()
-  }
-
   let currentTime = ref(new Date())
-  setInterval(function () { currentTime.value = new Date() }, 1000)
+  const startsInInterval = setInterval(() => { 
+    currentTime.value = new Date()
+
+    if (data.details.startTime < currentTime.value) {
+      clearInterval(startsInInterval)
+    }
+  }, 1000)
+
+  const renderStartsIn = computed(() => {
+    return data.details.startTime > currentTime.value
+  })
 
   const startsInTime = computed(() => {
     const diff: number = Math.floor((data.details.startTime.getTime() - currentTime.value.getTime()) / 1000)
@@ -334,7 +340,7 @@
     </div>
   </div>
 
-  <div v-if="renderStartsIn()" class="starts-in">
+  <div v-if="renderStartsIn" class="starts-in">
     Bingo starts in {{ startsInTime }}
   </div>
 
