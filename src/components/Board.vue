@@ -195,6 +195,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
         height: fit-content;
         display: flex;
         justify-content: space-around;
+        margin-bottom: -3px;
     }
 
     .board .tile {

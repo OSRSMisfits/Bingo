@@ -551,12 +551,13 @@
 
   .inspect-overlay .tile-bg {
     width: 15%;
-    min-width: 200px;
+    min-width: 150px;
     aspect-ratio: 1;
 
     position: relative;
     display: block;
     margin: auto;
+    border-radius: 5px;
 
     background: conic-gradient(from var(--a), rgba(0,0,0,0) 0deg, rgba(0,0,0,0) 120deg, #7E0BA8 240deg, rgba(0,0,0,0) 360deg);
     animation: border 4s infinite linear;
@@ -668,7 +669,7 @@
   }
 
   .top-boards div {
-    width: 25%;
+    width: 30%;
   }
 
   .bottom-boards {
