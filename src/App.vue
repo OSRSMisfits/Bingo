@@ -293,7 +293,9 @@
 
   <div :class="{ 'inspect-overlay': true, show: inspectData.inspecting, background: !inspectData.show }" @click="closeInspect">
     <div class="contents">
-      <img :src="inspectData.image" class="tile-img">
+      <div class="tile-bg">
+        <img :src="inspectData.image" class="tile-img">
+      </div>
       <span class="name">{{ inspectData.name }}</span>
       <span v-if="data.details.gameType == 2" class="points">{{ inspectData.points }} Points</span>
       <span class="description">{{ inspectData.description }}</span>
@@ -547,18 +549,30 @@
     initial-value: 0deg;
   }
 
-  .inspect-overlay .tile-img {
+  .inspect-overlay .tile-bg {
     width: 15%;
-    top: 0;
+    aspect-ratio: 1;
+
     position: relative;
     display: block;
     margin: auto;
 
-    padding: 8px;
-    border-radius: 5px;
     background: conic-gradient(from var(--a), rgba(0,0,0,0) 0deg, rgba(0,0,0,0) 120deg, #7E0BA8 240deg, rgba(0,0,0,0) 360deg);
     animation: border 4s infinite linear;
     animation-delay: 0ms;
+  }
+
+  .inspect-overlay .tile-img {
+    width: calc(100% - 35px);
+    margin-left: 10px;
+    margin-top: 10px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    top: 0;
+
+    padding: 8px;
+    border-radius: 5px;
+    background: #242424;
   }
 
   @keyframes border {

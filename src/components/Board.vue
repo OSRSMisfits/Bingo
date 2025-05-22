@@ -212,6 +212,8 @@ function emitInspect(tile: Tile, row: number, column: number) {
         width: 100%;
         aspect-ratio: 1;
         border: 3px solid #c7c7c7;
+        background: #242424;
+        object-fit: contain;
     }
 
     .board .tile.completed img {
