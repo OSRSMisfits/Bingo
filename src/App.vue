@@ -681,6 +681,7 @@
   .starts-in {
     position: relative;
     top: 127px;
+    left: -5px;
     height: 0;
     text-align: center;
     z-index: 10000;
