@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import Board from './components/Board.vue'
   import axios from 'axios'
-  import { reactive, ref } from 'vue'
+  import { computed, reactive, ref } from 'vue'
 
   const apiKey = import.meta.env.VITE_API_KEY
   const spreadsheet = import.meta.env.VITE_SPREADSHEET_ID
@@ -252,8 +252,30 @@
   }
 
   function mobile() {
-    return window.innerWidth > 1400
+    return window.innerWidth <= 1400
   }
+
+  function renderStartsIn() {
+    return data.details.startTime > new Date()
+  }
+
+  let currentTime = ref(new Date())
+  setInterval(function () { currentTime.value = new Date() }, 1000)
+
+  const startsInTime = computed(() => {
+    const diff: number = Math.floor((data.details.startTime.getTime() - currentTime.value.getTime()) / 1000)
+
+    const days: number = Math.floor(diff / 86400)
+    const afterDays: number = diff % 86400
+
+    const hours: number = Math.floor(afterDays / 3600)
+    const afterHours: number = afterDays % 3600
+
+    const minutes: number = Math.floor(afterHours / 60)
+    const seconds: number = afterHours % 60
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`
+  })
 </script>
 
 <template>
@@ -312,8 +334,12 @@
     </div>
   </div>
 
+  <div v-if="renderStartsIn()" class="starts-in">
+    Bingo starts in {{ startsInTime }}
+  </div>
+
   <div v-if="data.loaded" class="boards">
-    <template v-if="mobile()">
+    <template v-if="!mobile()">
       <div v-if="data.details.teamCount == 2">
         <!-- TODO: Only 2 teams -->
       </div>
@@ -652,6 +678,16 @@
     max-height: 200px;
   }
 
+  .starts-in {
+    position: relative;
+    top: 127px;
+    height: 0;
+    text-align: center;
+    z-index: 10000;
+    font-size: 20px;
+    user-select: none;
+  }
+
   .boards {
     position: absolute;
     left: -4px;
@@ -707,6 +743,10 @@
     .inspect-overlay {
       left: -8px;
     }
+    
+    .starts-in {
+      font-size: 16px;
+    }
   }
 
   @media only screen and (max-width: 400px) {
@@ -717,6 +757,10 @@
 
     .top-bar .contents .text {
       font-size: 24px;
+    }
+
+    .starts-in {
+      font-size: 12px;
     }
   }
 </style>
