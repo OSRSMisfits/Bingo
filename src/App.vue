@@ -530,7 +530,7 @@
   }
 
   .timer .timer-end {
-    box-shadow: -5px 0px 0px #161616;
+    box-shadow: -10px 0px 0px #161616;
   }
 
   .timer .timer-end {
