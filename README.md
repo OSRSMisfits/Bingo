@@ -3,7 +3,7 @@ Bingo board made by RSN: iacto, Discord: left.twix for the Misfits Inc. OSRS cla
 
 Template Spreadsheet: https://docs.google.com/spreadsheets/d/1uriSEUi_keLzkIRA1pb6l5aycS_HpdIhrJOc3T-z114/edit?gid=2016494020#gid=2016494020
 
-This was thrown together over the course of a few days as a fun little project. Don't expect good code quality, I wrote it to work, not be pretty or maintainable
+This was thrown together over the course of a few days as a fun little project. Don't expect good code quality - I wrote it to work, not be pretty or maintainable
 
 ## Usage
 This app is designed to be deployed without cost, thus it does not technically have a back-end.
