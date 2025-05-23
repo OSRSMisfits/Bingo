@@ -434,6 +434,11 @@
         </div>
     </template>
   </div>
+
+  <!-- If you're modifying this for your own use, please leave this intact -->
+  <span class="attribution">
+    Made by RSN: iacto, Discord: left.twix
+  </span>
 </template>
 
 <style scoped>
@@ -844,6 +849,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .attribution {
+    position: fixed;
+    bottom: 0;
+    left: 5;
+    color: rgba(172, 172, 172, 0.8);
+    user-select: none;
+    pointer-events: none;
   }
 
   @media only screen and (max-width: 600px) {
