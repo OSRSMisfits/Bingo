@@ -50,6 +50,10 @@ function teamInfo() {
 function getMemberIcon(name: string) {
     if (props.members == null) return null
 
+    if (name.toLowerCase() == "ellyii") {
+        return "Short_Green_Guy"
+    }
+
     let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
 
     return member?.role
