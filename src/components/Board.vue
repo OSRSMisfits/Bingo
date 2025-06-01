@@ -5,6 +5,7 @@ const emit = defineEmits(['inspect'])
 const props = defineProps<{ 
     board: Array<Array<Tile>>,
     details: BoardDetails,
+    members: MembersStorage | null,
     teamboard: TeamBoard,
     boardid: number
 }>()
@@ -46,6 +47,32 @@ function teamInfo() {
     return props.details.teams[props.teamboard.team]
 }
 
+function getMemberIcon(name: string) {
+    if (props.members == null) return null
+
+    let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
+
+    return member?.role
+}
+
+function getMemberIconImg(name: string) {
+    const role = getMemberIcon(name)
+
+    if (role == null) return ""
+
+    let adjustedRole = role.charAt(0).toUpperCase() + role.slice(1)
+
+    switch(adjustedRole) {
+        case "Tzkal":
+            adjustedRole = "TzKal"; break
+        case "Tztok":
+            adjustedRole = "TzTok"; break
+        default: break
+    }
+
+    return `https://oldschool.runescape.wiki/images/Clan_icon_-_${adjustedRole}.png`
+}
+
 function emitInspect(tile: Tile, row: number, column: number) {
     const posTile: PositionedTile = {
         image: tile.image,
@@ -74,7 +101,10 @@ function emitInspect(tile: Tile, row: number, column: number) {
                 Team {{ teamInfo().name }}
             </span>
             <span class="team-members">
-                {{ teamInfo().members.join(", ") }}
+                <span class="team-member" v-for="(member, index) in teamInfo().members" :key="`${boardid}-member${index}`">
+                    <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)">
+                    {{ member }}
+                </span>
             </span>
         </div>
         <div class="board">
@@ -182,6 +212,17 @@ function emitInspect(tile: Tile, row: number, column: number) {
         display: block;
         margin-top: -8px;
         margin-bottom: 2px;
+    }
+
+    .info .team-members .team-member {
+        margin-left: 5px;
+        margin-right: 5px;
+        white-space: nowrap;
+    }
+
+    .info .team-members .team-member img {
+        position: relative;
+        top: 1px;
     }
 
     .board {

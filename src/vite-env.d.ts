@@ -4,7 +4,8 @@ interface GameDetails {
     details: BoardDetails,
     board: Array<Array<Tile>>,
     teamBoards: Array<TeamBoard>,
-    loaded: boolean
+    loaded: boolean,
+    userData: MembersStorage | null
 }
 
 interface BoardDetails {
@@ -63,4 +64,27 @@ interface InspectData {
 interface TeamTileCompletion {
     name: string,
     screenshot: string
+}
+
+interface WOMRawMembership {
+    playerId: number,
+    role: string,
+    player: WOMRawPlayer
+}
+
+interface WOMRawPlayer {
+    username: string,
+    type: string
+}
+
+interface MembersStorage {
+    members: Array<Member>,
+    updated: Date
+}
+
+interface Member {
+    name: string,
+    id: number,
+    type: string,
+    role: string
 }

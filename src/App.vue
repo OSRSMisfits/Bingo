@@ -5,6 +5,7 @@
 
   const apiKey = import.meta.env.VITE_API_KEY
   const spreadsheet = import.meta.env.VITE_SPREADSHEET_ID
+  const womUserAgent = import.meta.env.VITE_WOM_USER_AGENT
 
   let data: GameDetails = reactive({
     details: {
@@ -17,9 +18,46 @@
     },
     board: [[]],
     teamBoards: [],
-    loaded: false
+    loaded: false,
+    userData: null
   })
 
+  // Try to fetch user ranks
+  let rawUserData: string | null = localStorage.getItem("womdata")
+  try {
+    data.userData = JSON.parse(rawUserData ?? "")
+  } catch(e) {}
+
+  if (data.userData == null || (new Date().getTime() - new Date(data.userData.updated).getTime() > 86400000)) {
+    axios.get(
+      `https://api.wiseoldman.net/v2/groups/${import.meta.env.VITE_WOM_GROUP_ID}`,
+      { headers: { "User-Agent-Is": womUserAgent } }
+    ).then(res => {
+      buildMembers(res.data.memberships)
+    })
+  }
+
+  function buildMembers(members: Array<WOMRawMembership>) {
+    data.userData = {
+      updated: new Date(),
+      members: new Array<Member>
+    }
+
+    for (let i = 0; i < members.length; i++) {
+      const member = {
+        name: members[i].player.username,
+        id: members[i].playerId,
+        type: members[i].player.type,
+        role: members[i].role
+      }
+
+      data.userData.members.push(member)
+    }
+
+    localStorage.setItem("womdata", JSON.stringify(userData))
+  }
+
+  // Fetch board data
   axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheet}/values/Data!B5:N34?key=${apiKey}`).then(res => {
     buildDetails(res.data.values)
     buildBoard(res.data.values, data.details)
@@ -381,7 +419,8 @@
       <div v-else-if="data.details.teamCount > 2" class="top-boards">
         <Board 
           :board="data.board" 
-          :details="data.details" 
+          :details="data.details"
+          :members="data.userData"
           :teamboard="data.teamBoards[1]" 
           :boardid="1"
           @inspect="inspectTile"
@@ -390,6 +429,7 @@
         <Board 
           :board="data.board" 
           :details="data.details" 
+          :members="data.userData"
           :teamboard="data.teamBoards[0]" 
           :boardid="0" 
           @inspect="inspectTile"
@@ -398,6 +438,7 @@
         <Board 
           :board="data.board" 
           :details="data.details" 
+          :members="data.userData"
           :teamboard="data.teamBoards[2]" 
           :boardid="2"
           @inspect="inspectTile"
@@ -411,6 +452,7 @@
             :key="`board-${i + 3}`"
             :board="data.board" 
             :details="data.details" 
+            :members="data.userData"
             :teamboard="board" 
             :boardid="i + 3"
             @inspect="inspectTile"
@@ -427,6 +469,7 @@
             :key="`board-${i}`"
             :board="data.board" 
             :details="data.details" 
+            :members="data.userData"
             :teamboard="board" 
             :boardid="i"
             @inspect="inspectTile"
