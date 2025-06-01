@@ -54,7 +54,7 @@
       data.userData.members.push(member)
     }
 
-    localStorage.setItem("womdata", JSON.stringify(userData))
+    localStorage.setItem("womdata", JSON.stringify(data.userData))
   }
 
   // Fetch board data
