@@ -294,21 +294,18 @@
   }
 
   let currentTime = ref(new Date())
+  let timerLoaded = ref(false)
   const startsInInterval = setInterval(() => { 
     currentTime.value = new Date()
 
-    if (data.details.startTime < currentTime.value) {
+    if (timerLoaded) timerLoaded.value = true
+
+    if (!renderStartsIn && !renderEndsIn) {
       clearInterval(startsInInterval)
     }
   }, 1000)
 
-  const renderStartsIn = computed(() => {
-    return data.details.startTime > currentTime.value
-  })
-
-  const startsInTime = computed(() => {
-    const diff: number = Math.floor((data.details.startTime.getTime() - currentTime.value.getTime()) / 1000)
-
+  function calcTime(diff: number) {
     const days: number = Math.floor(diff / 86400)
     const afterDays: number = diff % 86400
 
@@ -319,6 +316,30 @@
     const seconds: number = afterHours % 60
 
     return `${days}d ${hours}h ${minutes}m ${seconds}s`
+  }
+
+  const renderStartsIn = computed(() => {
+    return data.details.startTime > currentTime.value
+  })
+
+  const startsInTime = computed(() => {
+    const diff: number = Math.floor((data.details.startTime.getTime() - currentTime.value.getTime()) / 1000)
+
+    return calcTime(diff)
+  })
+
+  const renderEndsIn = computed(() => {
+    return data.details.endTime.getTime() < (currentTime.value.getTime() + 86400000)
+  })
+
+  const endsInTime = computed(() => {
+    const diff: number = Math.floor((data.details.endTime.getTime() - currentTime.value.getTime()) / 1000)
+
+    return calcTime(diff);
+  })
+
+  const renderEnded = computed(() => {
+    return data.details.endTime < currentTime.value
   })
 
   const renderRules = ref(false)
@@ -407,9 +428,18 @@
     </ul>
   </div>
 
-  <div v-if="renderStartsIn" class="starts-in">
-    Bingo starts in {{ startsInTime }}
-  </div>
+  <template v-if="timerLoaded">
+    <div v-if="renderStartsIn" class="timer-notice">
+      Bingo starts in {{ startsInTime }}
+    </div>
+    <div v-else-if="renderEnded" class="timer-notice">
+      Bingo has ended
+    </div>
+    <div v-else-if="renderEndsIn" class="timer-notice">
+      Bingo ends in {{ endsInTime }}
+    </div>
+  </template>
+
 
   <div v-if="data.loaded" class="boards">
     <template v-if="!mobile()">
@@ -761,7 +791,7 @@
     max-height: 200px;
   }
 
-  .starts-in {
+  .timer-notice {
     position: fixed;
     top: 135px;
     left: -5px;
@@ -921,7 +951,7 @@
       left: -8px;
     }
     
-    .starts-in {
+    .timer-notice {
       font-size: 16px;
     }
   }
@@ -936,7 +966,7 @@
       font-size: 24px;
     }
 
-    .starts-in {
+    .timer-notice {
       font-size: 12px;
     }
   }
