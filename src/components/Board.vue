@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { renderToWebStream } from 'vue/server-renderer';
-
 
 const emit = defineEmits(['inspect'])
 
