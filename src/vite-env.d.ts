@@ -43,6 +43,7 @@ interface TeamBoard {
 
 interface TeamTile {
     completed: boolean,
+    customValue: number,
     screenshot: string
 }
 
@@ -63,6 +64,8 @@ interface InspectData {
 
 interface TeamTileCompletion {
     name: string,
+    partialComplete: boolean,
+    pointOffset: number,
     screenshot: string
 }
 

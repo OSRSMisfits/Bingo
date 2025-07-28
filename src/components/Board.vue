@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { renderToWebStream } from 'vue/server-renderer';
+
 
 const emit = defineEmits(['inspect'])
 
@@ -10,8 +12,21 @@ const props = defineProps<{
     boardid: number
 }>()
 
-function tileCompleted(row: number, column: number) {
+function tileHasCompleteStatus(row: number, column: number) {
     return props.teamboard.board[row][column]?.completed || false
+}
+
+function tileCompleted(row: number, column: number) {
+    return tileHasCompleteStatus(row, column) && !tilePartiallyCompleted(row, column)
+}
+
+function tilePartiallyCompleted(row: number, column: number) {
+    if (!tileHasCompleteStatus(row, column))
+        return false
+
+    if ((props.teamboard.board[row][column]?.customValue || -1) > -1) {
+        return true
+    }
 }
 
 function standingSuper() {
@@ -116,7 +131,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
                 <div 
                     v-for="(tile, tileIndex) in row" 
                     :key="`${boardid}-row${rowIndex}-tile${tileIndex}`"
-                    :class="{ tile: true, completed: tileCompleted(rowIndex, tileIndex) }"
+                    :class="{ tile: true, completed: tileCompleted(rowIndex, tileIndex), partcompleted: tilePartiallyCompleted(rowIndex, tileIndex) }"
                     @click="emitInspect(tile, rowIndex, tileIndex)"
                 >
                     <img :src="tile.image || 'https://i.imgur.com/rpGJNaE.png'">
@@ -267,7 +282,16 @@ function emitInspect(tile: Tile, row: number, column: number) {
         opacity: 0.5;
     }
 
+    .board .tile.partcompleted img {
+        border-color: #ff1c1c;
+        opacity: 0.8;
+    }
+
     .board .tile.completed {
+        position: relative;
+    }
+
+    .board .tile.partcompleted {
         position: relative;
     }
 
@@ -276,6 +300,20 @@ function emitInspect(tile: Tile, row: number, column: number) {
         background-image: url("/misfits-logo-alt.png");
         width: 105%;
         aspect-ratio: 1;
+        display: block;
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: -100%;
+        margin-left: 2.5%;
+    }
+
+    .board .tile.partcompleted::after {
+        content: '';
+        background-image: url("/misfits-logo-alt.png");
+        width: 105%;
+        aspect-ratio: 1;
+        opacity: 0.75;
         display: block;
         position: absolute;
         background-size: contain;

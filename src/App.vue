@@ -144,13 +144,23 @@
         if (raw[row + (10 * i)].length)
 
         for (let column = 0; column < boardSize; column++) {
+          const rawValue = raw[row + (10 * i)][column] || ""
+          const commaSplit = rawValue.split(",")
+
           const tile: TeamTile = {
-            completed: raw[row + (10 * i)][column]?.length > 0 || false,
-            screenshot: raw[row + (10 * i)][column] || ""
+            completed: rawValue.length > 0 || false,
+            customValue: (commaSplit.length > 1) ? parseInt(commaSplit[0]) : -1,
+            screenshot: (commaSplit.length > 1) ? commaSplit[1] : rawValue
           }
 
           if (tile.completed) {
-            teamBoard.points += board[row][column].points
+            if (tile.customValue != -1) {
+              teamBoard.points += tile.customValue
+            }
+            else
+            {
+              teamBoard.points += board[row][column].points
+            }
           }
 
           builtRow.push(tile)
@@ -267,6 +277,8 @@
 
       const completion: TeamTileCompletion = {
         name: data.details.teams[data.teamBoards[i].team].name,
+        partialComplete: teamTile.customValue != -1,
+        pointOffset: data.board[tile.row][tile.column].points - teamTile.customValue,
         screenshot: teamTile.screenshot.startsWith("http") ? teamTile.screenshot : "https://i.imgur.com/rpGJNaE.png"
       }
 
@@ -410,6 +422,10 @@
       <div class="teams-list">
         <div v-for="(team, index) in inspectData.completions" :key="`team${index}-completion`" class="team">
           <span class="team-name">Team {{ team.name }}</span>
+          <span v-if="team.partialComplete">
+            <span class="partial-complete">Partial</span>
+            <span class="partial-complete">-{{ team.pointOffset }} Points</span>
+          </span>
           <a v-if="team.screenshot.length" :href="team.screenshot" target="_blank" @click.stop="">
             <img :src="team.screenshot" class="team-screenshot">
           </a>
@@ -783,6 +799,15 @@
     max-width: 200px;
     font-size: 20px;
     text-align: center;
+  }
+
+  .inspect-overlay .teams-list .team .partial-complete {
+    width: 100%;
+    max-width: 200px;
+    font-size: 16px;
+    text-align: center;
+    color: #ff1c1c;
+    display: block;
   }
 
   .inspect-overlay .teams-list .team .team-screenshot {
