@@ -282,7 +282,7 @@ function emitInspect(tile: Tile, row: number, column: number) {
 
     .board .tile.partcompleted img {
         border-color: #ff1c1c;
-        opacity: 0.8;
+        opacity: 0.5;
     }
 
     .board .tile.completed {
@@ -302,21 +302,20 @@ function emitInspect(tile: Tile, row: number, column: number) {
         position: absolute;
         background-size: contain;
         background-repeat: no-repeat;
-        margin-top: -100%;
-        margin-left: 2.5%;
+        margin-top: -90%;
+        margin-left: 1.5%;
     }
 
     .board .tile.partcompleted::after {
         content: '';
-        background-image: url("/misfits-logo-alt.png");
+        background-image: url("/misfits-logo-alt-red.png");
         width: 105%;
         aspect-ratio: 1;
-        opacity: 0.75;
         display: block;
         position: absolute;
         background-size: contain;
         background-repeat: no-repeat;
-        margin-top: -100%;
-        margin-left: 2.5%;
+        margin-top: -90%;
+        margin-left: 1.5%;
     }
 </style>
