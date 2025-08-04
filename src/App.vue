@@ -380,7 +380,7 @@
       <div class="contents">
         <div class="text" style="text-align: right;">Misfits</div>
         <div class="logo">
-          <img src="/misfits-logo.png">
+          <img src="/misfits-logo-bingo.png">
         </div>
         <div class="text">Bingo</div>
       </div>
@@ -566,10 +566,18 @@
     height: 100px;
   }
 
+  /*
   .top-bar .contents .logo {
     width: 250px;
     position: relative;
     top: -65px;
+  }
+    */
+
+  .top-bar .contents .logo {
+    width: 200px;
+    position: relative;
+    top: 2px;
   }
 
   .top-bar .contents .logo img {
