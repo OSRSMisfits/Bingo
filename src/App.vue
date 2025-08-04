@@ -976,9 +976,14 @@
       padding-left: 10px;
     }
 
-    .top-bar .contents .logo {
+    /* .top-bar .contents .logo {
       width: 200px;
       top: -45px;
+    } */
+
+    .top-bar .contents .logo {
+      width: 150px;
+      top: 7px;
     }
 
     .top-bar .contents .text {
@@ -995,11 +1000,6 @@
   }
 
   @media only screen and (max-width: 400px) {
-    .top-bar .contents .logo {
-      width: 200px;
-      top: -45px;
-    }
-
     .top-bar .contents .text {
       font-size: 24px;
     }
