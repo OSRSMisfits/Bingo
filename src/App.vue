@@ -202,18 +202,18 @@
 
   function getMonth(month: number) {
     switch(month) {
-      case 0:  return "January"
-      case 1:  return "February"
+      case 0:  return "Jan."
+      case 1:  return "Feb."
       case 2:  return "March"
       case 3:  return "April"
       case 4:  return "May"
       case 5:  return "June"
       case 6:  return "July"
-      case 7:  return "August"
-      case 8:  return "September"
-      case 9: return "October"
-      case 10: return "November"
-      case 11: return "December"
+      case 7:  return "Aug."
+      case 8:  return "Sept."
+      case 9: return "Oct."
+      case 10: return "Nov."
+      case 11: return "Dec."
     }
   }
 
@@ -629,7 +629,7 @@
 
   .timer .timer-end {
     left: unset;
-    right: -19px;
+    right: -25px;
   }
 
   .timer .timer-cap .contents {
@@ -914,12 +914,14 @@
   .boards {
     position: absolute;
     left: -4px;
+    top: 173px;
     width: 100%;
+    overflow-y: scroll;
+    height: calc(100vh - 173px);
   }
 
   .top-boards {
     margin-left: 5vw;
-    margin-top: 155px;
     width: 90vw;
     display: flex;
     flex-direction: row;
@@ -943,7 +945,6 @@
   .mobile-boards {
     margin-left: 5%;
     width: 90%;
-    margin-top: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
