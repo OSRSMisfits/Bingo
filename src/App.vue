@@ -564,6 +564,10 @@
     font-weight: bold;
     width: 150px;
     height: 100px;
+    margin-top: 5px;
+
+    text-shadow: 0.5px 2px 1px #481539;
+    color: #9C2D7B;
   }
 
   /*
@@ -575,9 +579,9 @@
     */
 
   .top-bar .contents .logo {
-    width: 200px;
+    width: 190px;
     position: relative;
-    top: 2px;
+    top: 3px;
   }
 
   .top-bar .contents .logo img {
