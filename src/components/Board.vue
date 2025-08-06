@@ -64,7 +64,7 @@ function getMemberIcon(name: string) {
     if (props.members == null) return null
 
     if (name.toLowerCase() == "ellyii") {
-        return "Short_Green_Guy"
+        return "Goblin"
     }
 
     let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
@@ -84,6 +84,8 @@ function getMemberIconImg(name: string) {
             adjustedRole = "TzKal"; break
         case "Tztok":
             adjustedRole = "TzTok"; break
+        case "Short_green_guy":
+            adjustedRole = "Short_Green_Guy"; break
         default: break
     }
 
