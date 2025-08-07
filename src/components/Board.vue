@@ -92,6 +92,21 @@ function getMemberIconImg(name: string) {
     return `https://oldschool.runescape.wiki/images/Clan_icon_-_${adjustedRole}.png`
 }
 
+function getIronmanIcon(name: string) {
+    if (props.members == null) return ""
+
+    let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
+
+    if (member == null) return ""
+
+    switch(member.type) {
+        case "ironman":
+            return `https://oldschool.runescape.wiki/images/Ironman_chat_badge.png`
+        default:
+            return ""
+    }
+}
+
 function emitInspect(tile: Tile, row: number, column: number) {
     const posTile: PositionedTile = {
         image: tile.image,
@@ -121,7 +136,8 @@ function emitInspect(tile: Tile, row: number, column: number) {
             </span>
             <span class="team-members">
                 <span class="team-member" v-for="(member, index) in teamInfo().members" :key="`${boardid}-member${index}`">
-                    <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)">
+                    <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)" style="margin-right:4px">
+                    <img v-if="getIronmanIcon(member)" :src="getIronmanIcon(member)">
                     {{ member }}
                 </span>
             </span>
