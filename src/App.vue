@@ -502,7 +502,7 @@
             :teamboard="board" 
             :boardid="i + 3"
             @inspect="inspectTile"
-            style="transform:scale(0.8)" 
+            style="transform:scale(0.9)" 
           />
         </div>
       </template>
