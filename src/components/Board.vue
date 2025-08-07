@@ -136,8 +136,8 @@ function emitInspect(tile: Tile, row: number, column: number) {
             </span>
             <span class="team-members">
                 <span class="team-member" v-for="(member, index) in teamInfo().members" :key="`${boardid}-member${index}`">
-                    <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)" style="margin-right:4px">
-                    <img v-if="getIronmanIcon(member)" :src="getIronmanIcon(member)">
+                    <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)">
+                    <img v-if="getIronmanIcon(member)" :src="getIronmanIcon(member)"  style="margin-left:4px">
                     {{ member }}
                 </span>
             </span>
