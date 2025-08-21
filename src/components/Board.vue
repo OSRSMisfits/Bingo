@@ -138,7 +138,8 @@ function emitInspect(tile: Tile, row: number, column: number) {
                 <span class="team-member" v-for="(member, index) in teamInfo().members" :key="`${boardid}-member${index}`">
                     <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)">
                     <img v-if="getIronmanIcon(member)" :src="getIronmanIcon(member)"  style="margin-left:4px">
-                    {{ member }}
+                    <span>{{ member }}<span v-if="member == 'Ellyii'"> (Carried)</span></span>
+                    
                 </span>
             </span>
         </div>
