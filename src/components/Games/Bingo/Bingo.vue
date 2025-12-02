@@ -9,7 +9,6 @@
         apiKey: String
     }>()
 
-    let teamBoards: Array<TeamBoard> = []
     const loaded = ref(false)
 
     const inspectRef: any = inject('inspectRef')
@@ -32,39 +31,39 @@
         const boards: Array<TeamBoard> = []
 
         for (let i = 0; i < details.teamCount; i++) {
-        const teamBoard: TeamBoard = {
-            team: i,
-            points: 0,
-            standing: -1,
-            board: []
-        }
-
-        for (let row = 0; row < boardSize; row++) {
-            const builtRow: Array<TeamTile> = []
-
-            if (raw[row + (10 * i)].length)
-
-            for (let column = 0; column < boardSize; column++) {
-            const rawValue = raw[row + (10 * i)][column] || ""
-            const commaSplit = rawValue.split(",")
-
-            const tile: TeamTile = {
-                completed: rawValue.length > 0 || false,
-                customValue: (commaSplit.length > 1) ? parseInt(commaSplit[0]) : -1,
-                screenshot: (commaSplit.length > 1) ? commaSplit[1] : rawValue
+            const teamBoard: TeamBoard = {
+                team: i,
+                points: 0,
+                standing: -1,
+                board: []
             }
 
-            if (tile.completed) {
-                if (tile.customValue != -1) {
-                teamBoard.points += tile.customValue
-                }
-                else
-                {
-                teamBoard.points += board[row][column].points
-                }
-            }
+            for (let row = 0; row < boardSize; row++) {
+                const builtRow: Array<TeamTile> = []
 
-            builtRow.push(tile)
+                if (raw[row + (10 * i)].length)
+
+                for (let column = 0; column < boardSize; column++) {
+                const rawValue = raw[row + (10 * i)][column] || ""
+                const commaSplit = rawValue.split(",")
+
+                const tile: TeamTile = {
+                    completed: rawValue.length > 0 || false,
+                    customValue: (commaSplit.length > 1) ? parseInt(commaSplit[0]) : -1,
+                    screenshot: (commaSplit.length > 1) ? commaSplit[1] : rawValue
+                }
+
+                if (tile.completed) {
+                    if (tile.customValue != -1) {
+                    teamBoard.points += tile.customValue
+                    }
+                    else
+                    {
+                    teamBoard.points += board[row][column].points
+                    }
+                }
+
+                builtRow.push(tile)
             }
 
             teamBoard.board.push(builtRow)
@@ -74,14 +73,14 @@
         }
 
         boards.sort((a, b) => {
-        return b.points - a.points
+            return b.points - a.points
         })
 
         for (let i = 0; i < details.teamCount; i++) {
-        boards[i].standing = i + 1
+            boards[i].standing = i + 1
         }
 
-        teamBoards = boards
+        props.data.teamBoards = boards
 
         loaded.value = true
     }
@@ -102,7 +101,7 @@
                 :board="data.board" 
                 :details="data.details"
                 :members="data.userData"
-                :teamboard="teamBoards[1]" 
+                :teamboard="data.teamBoards[1]" 
                 :boardid="1"
                 @inspect="inspectTile"
                 style="padding-top:48px" 
@@ -111,7 +110,7 @@
                 :board="data.board" 
                 :details="data.details" 
                 :members="data.userData"
-                :teamboard="teamBoards[0]" 
+                :teamboard="data.teamBoards[0]" 
                 :boardid="0" 
                 @inspect="inspectTile"
                 style="transform:scale(1.1)" 
@@ -120,7 +119,7 @@
                 :board="data.board" 
                 :details="data.details" 
                 :members="data.userData"
-                :teamboard="teamBoards[2]" 
+                :teamboard="data.teamBoards[2]" 
                 :boardid="2"
                 @inspect="inspectTile"
                 style="padding-top:48px" 
@@ -129,7 +128,7 @@
         <template v-if="data.details.teamCount > 3">
             <div class="bottom-boards">
             <BingoBoard
-                v-for="(board, i) in teamBoards.slice(3)"
+                v-for="(board, i) in data.teamBoards.slice(3)"
                 :key="`board-${i + 3}`"
                 :board="data.board" 
                 :details="data.details" 
@@ -146,7 +145,7 @@
         <!-- Mobile -->
         <div class="mobile-boards">
             <BingoBoard
-                v-for="(board, i) in teamBoards"
+                v-for="(board, i) in data.teamBoards"
                 :key="`board-${i}`"
                 :board="data.board" 
                 :details="data.details" 

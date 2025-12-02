@@ -4,7 +4,7 @@ interface GameDetails {
     details: BoardDetails,
     board: Array<Array<Tile>>,
     userData: MembersStorage | null,
-    teamBoards: Array<TeamBoard> | null
+    teamBoards: Array<TeamBoard>
 }
 
 interface BoardDetails {
