@@ -1,124 +1,123 @@
 <script setup lang="ts">
+    const emit = defineEmits(['inspect'])
 
-const emit = defineEmits(['inspect'])
+    const props = defineProps<{ 
+        board: Array<Array<Tile>>,
+        details: BoardDetails,
+        members: MembersStorage | null,
+        teamboard: TeamBoard,
+        boardid: number
+    }>()
 
-const props = defineProps<{ 
-    board: Array<Array<Tile>>,
-    details: BoardDetails,
-    members: MembersStorage | null,
-    teamboard: TeamBoard,
-    boardid: number
-}>()
-
-function tileHasCompleteStatus(row: number, column: number) {
-    return props.teamboard.board[row][column]?.completed || false
-}
-
-function tileCompleted(row: number, column: number) {
-    return tileHasCompleteStatus(row, column) && !tilePartiallyCompleted(row, column)
-}
-
-function tilePartiallyCompleted(row: number, column: number) {
-    if (!tileHasCompleteStatus(row, column))
-        return false
-
-    if ((props.teamboard.board[row][column]?.customValue || -1) > -1) {
-        return true
-    }
-}
-
-function standingSuper() {
-    if (props.teamboard.standing == 1) {
-        return "st"
-    }
-    if (props.teamboard.standing == 2) {
-        return "nd"
-    }
-    if (props.teamboard.standing == 3) {
-        return "rd"
-    }
-    if (props.teamboard.standing > 3) {
-        return "th"
-    }
-}
-
-function standingClass() {
-    if (props.teamboard.standing == 1) {
-        return { standing: true, first: true }
-    }
-    if (props.teamboard.standing == 2) {
-        return { standing: true, second: true }
-    }
-    if (props.teamboard.standing == 3) {
-        return { standing: true, third: true }
+    function tileHasCompleteStatus(row: number, column: number) {
+        return props.teamboard.board[row][column]?.completed || false
     }
 
-    return { standing: true }
-}
-
-function teamInfo() {
-    return props.details.teams[props.teamboard.team]
-}
-
-function getMemberIcon(name: string) {
-    if (props.members == null) return null
-
-    if (name.toLowerCase() == "ellyii") {
-        return "Goblin"
+    function tileCompleted(row: number, column: number) {
+        return tileHasCompleteStatus(row, column) && !tilePartiallyCompleted(row, column)
     }
 
-    let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
+    function tilePartiallyCompleted(row: number, column: number) {
+        if (!tileHasCompleteStatus(row, column))
+            return false
 
-    return member?.role
-}
-
-function getMemberIconImg(name: string) {
-    const role = getMemberIcon(name)
-
-    if (role == null) return ""
-
-    let adjustedRole = role.charAt(0).toUpperCase() + role.slice(1)
-
-    switch(adjustedRole) {
-        case "Tzkal":
-            adjustedRole = "TzKal"; break
-        case "Tztok":
-            adjustedRole = "TzTok"; break
-        case "Short_green_guy":
-            adjustedRole = "Short_Green_Guy"; break
-        default: break
+        if ((props.teamboard.board[row][column]?.customValue || -1) > -1) {
+            return true
+        }
     }
 
-    return `https://oldschool.runescape.wiki/images/Clan_icon_-_${adjustedRole}.png`
-}
-
-function getIronmanIcon(name: string) {
-    if (props.members == null) return ""
-
-    let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
-
-    if (member == null) return ""
-
-    switch(member.type) {
-        case "ironman":
-            return `https://oldschool.runescape.wiki/images/Ironman_chat_badge.png`
-        default:
-            return ""
-    }
-}
-
-function emitInspect(tile: Tile, row: number, column: number) {
-    const posTile: PositionedTile = {
-        image: tile.image,
-        name: tile.name,
-        description: tile.description,
-        points: tile.points,
-        row,
-        column
+    function standingSuper() {
+        if (props.teamboard.standing == 1) {
+            return "st"
+        }
+        if (props.teamboard.standing == 2) {
+            return "nd"
+        }
+        if (props.teamboard.standing == 3) {
+            return "rd"
+        }
+        if (props.teamboard.standing > 3) {
+            return "th"
+        }
     }
 
-    emit('inspect', posTile)
-}
+    function standingClass() {
+        if (props.teamboard.standing == 1) {
+            return { standing: true, first: true }
+        }
+        if (props.teamboard.standing == 2) {
+            return { standing: true, second: true }
+        }
+        if (props.teamboard.standing == 3) {
+            return { standing: true, third: true }
+        }
+
+        return { standing: true }
+    }
+
+    function teamInfo() {
+        return props.details.teams[props.teamboard.team]
+    }
+
+    function getMemberIcon(name: string) {
+        if (props.members == null) return null
+
+        if (name.toLowerCase() == "ellyii") {
+            return "Goblin"
+        }
+
+        let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
+
+        return member?.role
+    }
+
+    function getMemberIconImg(name: string) {
+        const role = getMemberIcon(name)
+
+        if (role == null) return ""
+
+        let adjustedRole = role.charAt(0).toUpperCase() + role.slice(1)
+
+        switch(adjustedRole) {
+            case "Tzkal":
+                adjustedRole = "TzKal"; break
+            case "Tztok":
+                adjustedRole = "TzTok"; break
+            case "Short_green_guy":
+                adjustedRole = "Short_Green_Guy"; break
+            default: break
+        }
+
+        return `https://oldschool.runescape.wiki/images/Clan_icon_-_${adjustedRole}.png`
+    }
+
+    function getIronmanIcon(name: string) {
+        if (props.members == null) return ""
+
+        let member = props.members.members.find(x => x.name == name.toLowerCase().replace("_", " ").replace("-", " "))
+
+        if (member == null) return ""
+
+        switch(member.type) {
+            case "ironman":
+                return `https://oldschool.runescape.wiki/images/Ironman_chat_badge.png`
+            default:
+                return ""
+        }
+    }
+
+    function emitInspect(tile: Tile, row: number, column: number) {
+        const posTile: PositionedTile = {
+            image: tile.image,
+            name: tile.name,
+            description: tile.description,
+            points: tile.points,
+            row,
+            column
+        }
+
+        emit('inspect', posTile)
+    }
 
 </script>
 
@@ -139,7 +138,6 @@ function emitInspect(tile: Tile, row: number, column: number) {
                     <img v-if="getMemberIcon(member)" :src="getMemberIconImg(member)">
                     <img v-if="getIronmanIcon(member)" :src="getIronmanIcon(member)"  style="margin-left:4px">
                     <span>{{ member }}<span v-if="member == 'Ellyii'"> (Carried)</span></span>
-                    
                 </span>
             </span>
         </div>

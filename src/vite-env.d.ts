@@ -3,9 +3,8 @@
 interface GameDetails {
     details: BoardDetails,
     board: Array<Array<Tile>>,
-    teamBoards: Array<TeamBoard>,
-    loaded: boolean,
-    userData: MembersStorage | null
+    userData: MembersStorage | null,
+    teamBoards: Array<TeamBoard> | null
 }
 
 interface BoardDetails {
@@ -59,7 +58,9 @@ interface InspectData {
     name: string,
     description: string,
     points: number,
-    completions: Array<TeamTileCompletion>
+    completions: Array<TeamTileCompletion>,
+    teamsOnTile: Array<number>,
+    tileNumber: number
 }
 
 interface TeamTileCompletion {
@@ -90,4 +91,17 @@ interface Member {
     id: number,
     type: string,
     role: string
+}
+
+interface TileRaceStandings {
+    teamPositions: Array<number>,
+    movements: Array<TileRaceMovement>
+}
+
+interface TileRaceMovement {
+    team: number,
+    roll: number,
+    newTile: number,
+    win: Boolean,
+    tileMovement: number
 }
