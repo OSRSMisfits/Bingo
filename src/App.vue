@@ -6,7 +6,7 @@
     import TileRace from './components/Games/TileRace/TileRace.vue'
     import axios from 'axios'
     import { GameTypes } from './GameTypes.js'
-    import { computed, reactive, ref, provide } from 'vue'
+    import { reactive, ref, provide } from 'vue'
 
     const apiKey = import.meta.env.VITE_API_KEY
     const spreadsheet = import.meta.env.VITE_SPREADSHEET_ID
@@ -22,7 +22,8 @@
             teams: []
         },
         board: [[]],
-        userData: null
+        userData: null,
+        teamBoards: []
     })
 
     const dataLoaded = ref(false)
