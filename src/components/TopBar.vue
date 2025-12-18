@@ -132,10 +132,10 @@
         <div class="top-bar">
             <div class="contents">
                 <div class="text" style="text-align: right;">Misfits</div>
-                <div class="logo">
-                <img src="/misfits-logo-bingo.png">
-                </div>
-                <div class="text">Bingo</div>
+                    <div class="logo">
+                        <img src="https://i.imgur.com/bzm3a7H.png">
+                    </div>
+                <div class="text">Tilerace</div>
             </div>
         </div>
 
