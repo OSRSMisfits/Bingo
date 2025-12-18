@@ -346,6 +346,7 @@
             margin-left: 5px;
             margin-right: 5px;
             position: relative;
+            cursor: pointer;
 
             img {
                 width: 100%;
