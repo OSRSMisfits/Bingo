@@ -164,13 +164,13 @@
 
     <template v-if="timerLoaded">
         <div v-if="renderStartsIn" class="timer-notice">
-            Bingo starts in {{ startsInTime }}
+            Event starts in {{ startsInTime }}
         </div>
         <div v-else-if="renderEnded" class="timer-notice">
-            Bingo has ended
+            Event has ended
         </div>
         <div v-else-if="renderEndsIn" class="timer-notice">
-            Bingo ends in {{ endsInTime }}
+            Event ends in {{ endsInTime }}
         </div>
   </template>
 </template>
