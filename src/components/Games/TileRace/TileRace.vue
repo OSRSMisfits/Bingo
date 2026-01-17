@@ -324,12 +324,14 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        overflow-x: scroll;
     }
 
     .board {
         margin-top: 250px;
         margin-left: auto;
         margin-right: auto;
+        min-width: 48 em;
 
         .row {
             margin: -10px;
