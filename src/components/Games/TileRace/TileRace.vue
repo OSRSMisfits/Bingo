@@ -331,7 +331,7 @@
         margin-top: 250px;
         margin-left: auto;
         margin-right: auto;
-        min-width: 48 em;
+        min-width: 48em;
 
         .row {
             margin: -10px;
