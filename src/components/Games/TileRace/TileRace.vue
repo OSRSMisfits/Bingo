@@ -229,14 +229,27 @@
     }
 
     const getDieText = (roll: number) => {
+        const svgSize = 80
+        const svgStyle = 'width: 100%; height: 100%;'
+        
         switch(roll) {
-            case 1: return "⚀"
-            case 2: return "⚁"
-            case 3: return "⚂"
-            case 4: return "⚃"
-            case 5: return "⚄"
-            case 6: return "⚅"
-            default: return roll
+            case 1: return `<svg viewBox="0 0 ${svgSize} ${svgSize}" style="${svgStyle}">
+                <polygon points="40,10 70,60 10,60" fill="white" stroke="black" stroke-width="2"/>
+                <text x="40" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="black">1</text>
+            </svg>`
+            case 2: return `<svg viewBox="0 0 ${svgSize} ${svgSize}" style="${svgStyle}">
+                <polygon points="40,10 70,60 10,60" fill="white" stroke="black" stroke-width="2"/>
+                <text x="40" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="black">2</text>
+            </svg>`
+            case 3: return `<svg viewBox="0 0 ${svgSize} ${svgSize}" style="${svgStyle}">
+                <polygon points="40,10 70,60 10,60" fill="white" stroke="black" stroke-width="2"/>
+                <text x="40" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="black">3</text>
+            </svg>`
+            case 4: return `<svg viewBox="0 0 ${svgSize} ${svgSize}" style="${svgStyle}">
+                <polygon points="40,10 70,60 10,60" fill="white" stroke="black" stroke-width="2"/>
+                <text x="40" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="black">4</text>
+            </svg>`
+            default: return roll.toString()
         }
     }
 
@@ -290,7 +303,7 @@
             >
                 <div class="left-side">
                     <div class="die">
-                        <span>{{ getDieText(movement.roll) }}</span>
+                        <span v-html="getDieText(movement.roll)"></span>
                     </div>
                 </div>
                 <div class="right-side">
@@ -437,8 +450,6 @@
                 height: 80px;
                 background: white;
                 color: black;
-                font-weight: bold;
-                font-size: 11.5rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -447,7 +458,11 @@
                 overflow: hidden;
 
                 span {
-                    margin-top: -20px;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
 
