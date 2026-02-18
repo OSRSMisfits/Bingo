@@ -1,4 +1,6 @@
 <script setup lang="ts">
+    import { GameTypes } from '../../../GameTypes';
+
     const emit = defineEmits(['inspect'])
 
     const props = defineProps<{ 
@@ -128,7 +130,7 @@
                 {{ teamboard.standing }}<sup>{{ standingSuper() }}</sup>
             </span>
             <span class="team-points">
-                {{ teamboard.points }} Points
+                {{ teamboard.points }} {{ details.gameType == GameTypes.POINTSBINGO ? "Point" : "Tile" }}{{ teamboard.points == 1 ? '' : 's' }}
             </span>
             <span class="team-name">
                 Team {{ teamInfo().name }}

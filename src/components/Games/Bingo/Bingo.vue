@@ -2,6 +2,7 @@
     import BingoBoard from './BingoBoard.vue'
     import axios from 'axios'
     import { ref, inject } from 'vue'
+    import { GameTypes } from '../../../GameTypes';
 
     const props = defineProps<{ 
         data: GameDetails,
@@ -17,7 +18,7 @@
     }
 
     const fetchStandings = () => {
-        const endRange = `N${36 + (props.data.details.teamCount * 10)}`
+        const endRange = `N${36 + ((props.data?.details?.teamCount || 0) * 10)}`
         axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${props.spreadsheet}/values/Data!D37:${endRange}?key=${props.apiKey}`).then(res => {
             buildStandings(res.data.values, props.data.details, props.data.board)
         })
@@ -44,32 +45,40 @@
                 if (raw[row + (10 * i)].length)
 
                 for (let column = 0; column < boardSize; column++) {
-                const rawValue = raw[row + (10 * i)][column] || ""
-                const commaSplit = rawValue.split(",")
+                    const rawValue = raw[row + (10 * i)][column] || ""
+                    const commaSplit = rawValue.split(",")
 
-                const tile: TeamTile = {
-                    completed: rawValue.length > 0 || false,
-                    customValue: (commaSplit.length > 1) ? parseInt(commaSplit[0]) : -1,
-                    screenshot: (commaSplit.length > 1) ? commaSplit[1] : rawValue
+                    const tile: TeamTile = {
+                        completed: rawValue.length > 0 || false,
+                        customValue: (commaSplit.length > 1) ? parseInt(commaSplit[0]) : -1,
+                        screenshot: (commaSplit.length > 1) ? commaSplit[1] : rawValue
+                    }
+
+                    if (props.data.details.gameType == GameTypes.POINTSBINGO) {
+                        if (tile.completed) {
+                            if (tile.customValue != -1) {
+                                teamBoard.points += tile.customValue
+                            }
+                            else
+                            {
+                                teamBoard.points += board[row][column].points
+                            }
+                        }
+                    } else {
+                        // Standard bingo
+
+                        if (tile.completed) {
+                            teamBoard.points += 1
+                        }
+                    }
+
+                    builtRow.push(tile)
                 }
 
-                if (tile.completed) {
-                    if (tile.customValue != -1) {
-                    teamBoard.points += tile.customValue
-                    }
-                    else
-                    {
-                    teamBoard.points += board[row][column].points
-                    }
-                }
-
-                builtRow.push(tile)
+                teamBoard.board.push(builtRow)
             }
 
-            teamBoard.board.push(builtRow)
-        }
-
-        boards.push(teamBoard)
+            boards.push(teamBoard)
         }
 
         boards.sort((a, b) => {
