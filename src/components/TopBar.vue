@@ -136,7 +136,7 @@
                         <img src="/misfits-pvm.png">
                         <!-- <img src="https://i.imgur.com/bzm3a7H.png"> -->
                     </div>
-                <div class="text">Tilerace</div>
+                <div class="text">Bingo</div>
             </div>
         </div>
 
