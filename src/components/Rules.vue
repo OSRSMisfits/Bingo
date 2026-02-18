@@ -32,6 +32,7 @@
             <li class="rule">Using alts for this competition is allowed. For example, if you have an iron with the content on the board completed, you can use a main account to then do that content. ALTING OF ANY KIND IS NOT ALLOWED IN THE BINGO. (i.e. Doloing, Resupply, etc) USING SERVICES TO BUY KILLS IS NOT ALLOWED.</li>
             <li class="rule">Content can be done across teams. If another team pulls a purple at a raid for example. Just screenshot with the item pulled and phrase word, showing that you were there for the drop.</li>
             <li class="rule">Everyone participating in Bingo will receive promotion points.</li>
+            <li class="rule">If your team pulls a pet after completing the pet tile, every pet pulled after that can be used to instantly finish a tile.</li>
         </ol>
   </div>
 </template>
