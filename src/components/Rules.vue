@@ -29,8 +29,8 @@
     <div :class="{ 'rules-overlay': true, show: renderRules, background: !showRules }" @click="closeRules">
         <ol class="rules-list">
             <li class="rule">All screenshots must include the phrase word that will be given once the event starts. If the phrase isn’t in the screenshot. The drop does not count.  Code Word: Will be released once the bingo begins and updated here 🙂</li>
-            <li class="rule">Using alts for this competition is allowed. For example, if you have an iron with the content on the board completed, you can use a main account to then do that content. ALTING OF ANY KIND IS NOT ALLOWED IN THE BINGO. (i.e. Doloing, Resupply, etc) USING SERVICES TO BUY KILLS IS NOT ALLOWED.</li>
-            <li class="rule">Content can be done across teams. If another team pulls a purple at a raid for example. Just screenshot with the item pulled and phrase word, showing that you were there for the drop.</li>
+            <li class="rule">You are allowed to use multiple accounts to participate (e.g. using your main to work on a tile your iron has unlocked already or isn't able to do), however you are only allowed to use a single account at any given time. Usage of alts is not allowed in any way (i.e. Doloing, Resupplying, Energy transfer, etc.) and will get you disqualified from the event. Using services to buy faster kills from other players is also strictly forbidden.</li>
+            <li class="rule">Content can be done across teams. If another team pulls a purple at a raid for example. Just screenshot with the item pulled and phrase word, showing that you were there for the drop. The player that pulls the drop MUST be a member of the clan for the drop to count.</li>
             <li class="rule">Everyone participating in Bingo will receive promotion points.</li>
             <li class="rule">If your team pulls a pet after completing the pet tile, every pet pulled after that can be used to instantly finish a tile.</li>
         </ol>
