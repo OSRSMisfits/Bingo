@@ -127,7 +127,7 @@
                 </span>
                 <span v-if="inspectData.teamsOnTile.length > 0" class="teams-on-tile">
                     <span v-for="(team, index) in inspectData.teamsOnTile" :key="`team-number-${team}`">
-                        <span :class="teamNumberToColor(team)">Team {{ data.details.teams[team - 1].name }}</span>{{ index < inspectData.teamsOnTile.length - 1 ? ', ' : '' }}
+                        <span :class="teamNumberToColor(team)">{{ data.details.teams[team - 1].name }}</span>{{ index < inspectData.teamsOnTile.length - 1 ? ', ' : '' }}
                         {{ index == inspectData.teamsOnTile.length - 2 ? 'and ' : '' }}
                     </span>
                     {{ inspectData.teamsOnTile.length > 1 ? 'are' : 'is' }} currently working on this tile.

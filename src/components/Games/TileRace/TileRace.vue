@@ -310,7 +310,7 @@
                         <div v-if="movement.tileMovement > 0"><strong>Tile {{ movement.newTile - movement.tileMovement }}</strong> caused them to <span class="good">advance</span> <strong>{{ movement.tileMovement }} tiles</strong>!</div>
                         <div v-if="movement.tileMovement < 0"><strong>Tile {{ movement.newTile - movement.tileMovement }}</strong> caused them to <span class="bad">backtrack</span> <strong>{{ -1 * movement.tileMovement }} tiles</strong>!</div>
                         <div v-if="movement.tileMovement != 0">They are now on <strong>Tile {{ movement.newTile }}</strong></div>
-                        <div v-if="movement.win" style="color: rgb(224, 224, 0);font-weight:bold">Team {{ teamInfo(movement.team).name }} has finished!</div>
+                        <div v-if="movement.win" style="color: rgb(224, 224, 0);font-weight:bold">{{ teamInfo(movement.team).name }} has finished!</div>
                     </span>
                 </div>
             </li>
