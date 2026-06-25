@@ -9,7 +9,9 @@
     import { reactive, ref, provide } from 'vue'
 
     const apiKey = import.meta.env.VITE_API_KEY
-    const spreadsheet = import.meta.env.VITE_SPREADSHEET_ID
+    const spreadsheet = (window.location.search === "?preview=true")
+                        ? import.meta.env.VITE_PREVIEW_SPREADSHEET_ID
+                        : import.meta.env.VITE_SPREADSHEET_ID
     const womUserAgent = import.meta.env.VITE_WOM_USER_AGENT
 
     let data: GameDetails = reactive({

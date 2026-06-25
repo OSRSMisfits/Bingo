@@ -102,53 +102,70 @@
 <template>
     <div v-if="loaded" class="boards">
         <template v-if="!mobile()">
-        <div v-if="data.details.teamCount == 2">
-            <!-- TODO: Only 2 teams -->
-        </div>
-        <div v-else-if="data.details.teamCount > 2" class="top-boards">
-            <BingoBoard 
-                :board="data.board" 
-                :details="data.details"
-                :members="data.userData"
-                :teamboard="data.teamBoards[1]" 
-                :boardid="1"
-                @inspect="inspectTile"
-                style="padding-top:48px" 
-            />
-            <BingoBoard 
-                :board="data.board" 
-                :details="data.details" 
-                :members="data.userData"
-                :teamboard="data.teamBoards[0]" 
-                :boardid="0" 
-                @inspect="inspectTile"
-                style="transform:scale(1.1)" 
-            />
-            <BingoBoard 
-                :board="data.board" 
-                :details="data.details" 
-                :members="data.userData"
-                :teamboard="data.teamBoards[2]" 
-                :boardid="2"
-                @inspect="inspectTile"
-                style="padding-top:48px" 
-            />
-        </div>
-        <template v-if="data.details.teamCount > 3">
-            <div class="bottom-boards">
-            <BingoBoard
-                v-for="(board, i) in data.teamBoards.slice(3)"
-                :key="`board-${i + 3}`"
-                :board="data.board" 
-                :details="data.details" 
-                :members="data.userData"
-                :teamboard="board" 
-                :boardid="i + 3"
-                @inspect="inspectTile"
-                style="transform:scale(0.9)" 
-            />
+            <div v-if="data.details.teamCount == 2" class="two-boards">
+                <BingoBoard 
+                    :board="data.board" 
+                    :details="data.details"
+                    :members="data.userData"
+                    :teamboard="data.teamBoards[0]" 
+                    :boardid="1"
+                    @inspect="inspectTile"
+                    style="padding-top:48px" 
+                />
+                <BingoBoard 
+                    :board="data.board" 
+                    :details="data.details"
+                    :members="data.userData"
+                    :teamboard="data.teamBoards[1]" 
+                    :boardid="1"
+                    @inspect="inspectTile"
+                    style="padding-top:48px" 
+                />
             </div>
-        </template>
+            <div v-else-if="data.details.teamCount > 2" class="top-boards">
+                <BingoBoard 
+                    :board="data.board" 
+                    :details="data.details"
+                    :members="data.userData"
+                    :teamboard="data.teamBoards[1]" 
+                    :boardid="1"
+                    @inspect="inspectTile"
+                    style="padding-top:48px" 
+                />
+                <BingoBoard 
+                    :board="data.board" 
+                    :details="data.details" 
+                    :members="data.userData"
+                    :teamboard="data.teamBoards[0]" 
+                    :boardid="0" 
+                    @inspect="inspectTile"
+                    style="transform:scale(1.1)" 
+                />
+                <BingoBoard 
+                    :board="data.board" 
+                    :details="data.details" 
+                    :members="data.userData"
+                    :teamboard="data.teamBoards[2]" 
+                    :boardid="2"
+                    @inspect="inspectTile"
+                    style="padding-top:48px" 
+                />
+            </div>
+            <template v-if="data.details.teamCount > 3">
+                <div class="bottom-boards">
+                    <BingoBoard
+                        v-for="(board, i) in data.teamBoards.slice(3)"
+                        :key="`board-${i + 3}`"
+                        :board="data.board" 
+                        :details="data.details" 
+                        :members="data.userData"
+                        :teamboard="board" 
+                        :boardid="i + 3"
+                        @inspect="inspectTile"
+                        style="transform:scale(0.9)" 
+                    />
+                </div>
+            </template>
         </template>
         <template v-else>
         <!-- Mobile -->
@@ -176,6 +193,15 @@
         width: 100%;
         overflow-y: scroll;
         height: calc(100vh - 173px);
+    }
+
+    .two-boards {
+        width: 90vw;
+        margin-left: 5vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
     }
 
     .top-boards {
