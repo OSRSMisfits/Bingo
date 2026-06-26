@@ -133,7 +133,7 @@
             <div class="contents">
                 <div class="text" style="text-align: right;">Misfits</div>
                     <div class="logo">
-                        <img src="/misfits-pvm.png">
+                        <img src="/misfits-america.png">
                         <!-- <img src="https://i.imgur.com/bzm3a7H.png"> -->
                     </div>
                 <div class="text">Bingo</div>
@@ -224,13 +224,15 @@
 
             .logo {
                 width: 190px;
+                height: 190px;
                 position: relative;
-                top: 3px;
+                top: 0px;
 
                 img {
-                    width: calc(100% - 50px);
+                    width: calc(100% - 30px);
+                    height: calc(100% - 30px);
                     border-radius: 50%;
-                    border: 5px solid #161616;
+                    //border: 5px solid #161616;
                     margin-left: 20px;
                 }
             }
