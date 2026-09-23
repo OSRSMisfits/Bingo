@@ -1,5 +1,10 @@
 /// <reference types="vite/client" />
 
+interface Parameter {
+    key: string,
+    value: string
+}
+
 interface GameDetails {
     details: BoardDetails,
     board: Array<Array<Tile>>,

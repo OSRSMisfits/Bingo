@@ -8,10 +8,27 @@
     import { GameTypes } from './GameTypes.js'
     import { reactive, ref, provide } from 'vue'
 
+    // Parse params
+    const search = window.location.search.substr(1, window.location.search.length)
+    let params: Array<Parameter> = []
+    if (search.length > 0) {
+        let split = search.split("&")
+        for(let i = 0; i < split.length; i++) {
+            let p: string[] = split[i].split("=")
+            params.push({
+                key: p[0],
+                value: p[1]
+            })
+        }
+    }
+
+    let spreadsheetId = null
+    for(let i = 0; i < params.length; i++) {
+        if (params[i].key == "sid") spreadsheetId = params[i].value
+    }
+
     const apiKey = import.meta.env.VITE_API_KEY
-    const spreadsheet = (window.location.search === "?preview=true")
-                        ? import.meta.env.VITE_PREVIEW_SPREADSHEET_ID
-                        : import.meta.env.VITE_SPREADSHEET_ID
+    const spreadsheet = spreadsheetId ?? import.meta.env.VITE_SPREADSHEET_ID
     const womUserAgent = import.meta.env.VITE_WOM_USER_AGENT
 
     let data: GameDetails = reactive({
