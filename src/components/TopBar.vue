@@ -133,7 +133,7 @@
             <div class="contents">
                 <div class="text" style="text-align: right;">Misfits</div>
                     <div class="logo">
-                        <img src="/misfits-america.png">
+                        <img src="/misfits-spooky.png">
                         <!-- <img src="https://i.imgur.com/bzm3a7H.png"> -->
                     </div>
                 <div class="text">Bingo</div>
@@ -210,8 +210,12 @@
                 height: 100px;
                 margin-top: 5px;
 
-                text-shadow: 0.5px 2px 1px #481539;
-                color: #9C2D7B;
+                //text-shadow: 0.5px 2px 1px #481539;
+                //color: #9C2D7B;
+
+                text-shadow: 0.5px 3px 3px #704000;
+                color: #eb8500;
+                font-family: "Kilegore";
             }
 
             /*
@@ -226,7 +230,7 @@
                 width: 190px;
                 height: 190px;
                 position: relative;
-                top: 0px;
+                top: -10px;
 
                 img {
                     width: calc(100% - 30px);

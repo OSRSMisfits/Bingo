@@ -173,6 +173,11 @@
 </template>
 
 <style lang="scss" scoped>
+    @font-face {
+        font-family: "Kilegore";
+        src: url('/public/KilegorePersonalUse-yYmZ2.otf');
+    }
+
     .attribution {
         position: fixed;
         bottom: 0;

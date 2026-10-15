@@ -125,6 +125,8 @@
 
 <template>
     <div class="container">
+        <!-- <img class="overlay-image" src="/public/spooky-frame.png"> -->
+
         <div class="info">
             <span :class="standingClass()">
                 {{ teamboard.standing }}<sup>{{ standingSuper() }}</sup>
@@ -164,6 +166,12 @@
         flex-direction: column;
         width: 100%;
         max-width: 500px;
+    }
+
+    .overlay-image {
+        position: absolute;
+        scale: 0.7;
+        left: 00px;
     }
 
     .info .standing {
@@ -289,7 +297,7 @@
     .board .tile img {
         width: 100%;
         aspect-ratio: 1;
-        border: 3px solid #c7c7c7;
+        border: 3px solid #b46600; /*#c7c7c7;*/
         background: #242424;
         object-fit: contain;
     }
