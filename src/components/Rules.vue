@@ -32,7 +32,7 @@
             <li class="rule">You are allowed to use multiple accounts to participate (e.g. using your main to work on a tile your iron has unlocked already or isn't able to do), however you are only allowed to use a single account at any given time. Usage of alts is not allowed in any way (i.e. Doloing, Resupplying, Energy transfer, etc.) and will get you disqualified from the event. Using services to buy faster kills from other players is also strictly forbidden.</li>
             <li class="rule">Content can be done across teams. If another team pulls a purple at a raid for example. Just screenshot with the item pulled and phrase word, showing that you were there for the drop. The player that pulls the drop MUST be a member of the clan for the drop to count.</li>
             <li class="rule">Everyone participating in Bingo will receive promotion points.</li>
-            <li class="rule">Bonus Rule: ONE TIME USE! If a member of your team pulls a pet, you may choose to instantly complete the tile for the content that pet is dropped from (e.g. Bandos pet instantly completes Bandos tile)</li>
+            <li class="rule">Bonus Rule: ONE TIME USE! If a member of your team pulls a pet and your team has already completed the pet tile, you may choose to instantly complete the tile for the content that pet is dropped from (e.g. Bandos pet instantly completes Bandos tile). The team has 24 hours from the time the pet is pulled to decide if they want to invoke this rule.</li>
         </ol>
   </div>
 </template>
